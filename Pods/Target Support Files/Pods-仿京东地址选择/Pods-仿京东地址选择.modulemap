@@ -1,0 +1,6 @@
+framework module Pods________ {
+  umbrella header "Pods-仿京东地址选择-umbrella.h"
+
+  export *
+  module * { export * }
+}
