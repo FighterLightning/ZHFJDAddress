@@ -1,4 +1,4 @@
-相信聪明的你能够轻松集成到项目中
+相信聪明的你能够轻松集成到项目中(有任何集成困难，或不理解的地方可加QQ：991150443进行询问，绝对尽心给你解决，保证满意。)
 # ZHFJDAddress
 /*该demo的使用须知:
  1.下载该demo。把ProvinceModel.swift（必须），ZHFAddTitleAddressView.swift(必须) NetworkTools.swift(可用自己封装的)拖进项目
