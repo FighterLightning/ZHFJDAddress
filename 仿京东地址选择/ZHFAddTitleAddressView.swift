@@ -77,6 +77,16 @@ class ZHFAddTitleAddressView: UIView {
         cancelBtn.setImage(UIImage.init(named: "cancel"), for: UIControlState.normal)
         cancelBtn.addTarget(self, action: #selector(tapBtnAndcancelBtnClick), for: UIControlEvents.touchUpInside)
         addAddressView.addSubview(cancelBtn)
+       let tableView: UITableView = UITableView.init(frame: CGRect.init(x: 0, y: 0, width: ScreenWidth, height: 200), style: UITableViewStyle.plain)
+        tableView.separatorStyle = UITableViewCellSeparatorStyle.none
+        tableView.tag = 0
+        tableViewMarr.add(tableView)
+        titleMarr.add("请选择")
+        //1.添加标题滚动视图
+        setupTitleScrollView()
+        //2.添加内容滚动视图
+        setupContentScrollView()
+        setupAllTitle(selectId: 0)
         return self
     }
     //弹出的动画效果
