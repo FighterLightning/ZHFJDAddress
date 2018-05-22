@@ -30,16 +30,6 @@ class ViewController: UIViewController,ZHFAddTitleAddressViewDelegate {
         addTitleAddressView.userID = 7
         addTitleAddressView.delegate = self
         addTitleAddressView.defaultHeight = 350
-        let tableView: UITableView = UITableView.init(frame: CGRect.init(x: 0, y: 0, width: ScreenWidth, height: 200), style: UITableViewStyle.plain)
-        tableView.separatorStyle = UITableViewCellSeparatorStyle.none
-        tableView.tag = 0
-        addTitleAddressView.tableViewMarr.add(tableView)
-        addTitleAddressView.titleMarr.add("请选择")
-        //1.添加标题滚动视图
-        addTitleAddressView.setupTitleScrollView()
-        //2.添加内容滚动视图
-        addTitleAddressView.setupContentScrollView()
-        addTitleAddressView.setupAllTitle(selectId: 0)
         self.view.addSubview(addTitleAddressView.initAddressView())
     }
     @IBAction func addressBtnClick(_ sender: UIButton) {
