@@ -16,6 +16,7 @@
 		E32B78031FDFC1BB0095BE8C /* ProvinceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E32B78021FDFC1BB0095BE8C /* ProvinceModel.swift */; };
 		E32B78051FDFC1C50095BE8C /* ZHFAddTitleAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E32B78041FDFC1C50095BE8C /* ZHFAddTitleAddressView.swift */; };
 		E32B78091FDFC6B70095BE8C /* NetworkTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = E32B78081FDFC6B70095BE8C /* NetworkTools.swift */; };
+		E33EFD8720B567BF00E873A8 /* location.txt in Resources */ = {isa = PBXBuildFile; fileRef = E33EFD8620B567BF00E873A8 /* location.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		E32B78021FDFC1BB0095BE8C /* ProvinceModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProvinceModel.swift; sourceTree = "<group>"; };
 		E32B78041FDFC1C50095BE8C /* ZHFAddTitleAddressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZHFAddTitleAddressView.swift; sourceTree = "<group>"; };
 		E32B78081FDFC6B70095BE8C /* NetworkTools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkTools.swift; sourceTree = "<group>"; };
+		E33EFD8620B567BF00E873A8 /* location.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = location.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +86,7 @@
 		E32B77EF1FDFC1A50095BE8C /* 仿京东地址选择 */ = {
 			isa = PBXGroup;
 			children = (
+				E33EFD8620B567BF00E873A8 /* location.txt */,
 				E32B78021FDFC1BB0095BE8C /* ProvinceModel.swift */,
 				E32B78081FDFC6B70095BE8C /* NetworkTools.swift */,
 				E32B78041FDFC1C50095BE8C /* ZHFAddTitleAddressView.swift */,
@@ -162,6 +165,7 @@
 				E32B77FB1FDFC1A50095BE8C /* LaunchScreen.storyboard in Resources */,
 				E32B77F81FDFC1A50095BE8C /* Assets.xcassets in Resources */,
 				E32B77F61FDFC1A50095BE8C /* Main.storyboard in Resources */,
+				E33EFD8720B567BF00E873A8 /* location.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

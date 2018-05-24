@@ -44,6 +44,7 @@ class ZHFAddTitleAddressView: UIView {
     lazy var provinceMarr:NSMutableArray = NSMutableArray() //省
     lazy var cityMarr:NSMutableArray = NSMutableArray() //市
     lazy var countyMarr:NSMutableArray = NSMutableArray() //县
+    lazy var townMarr:NSMutableArray = NSMutableArray() //乡镇
     var titleScrollView :UIScrollView = UIScrollView()
     var contentScrollView :UIScrollView = UIScrollView()
     var radioBtn :UIButton = UIButton()
@@ -52,9 +53,24 @@ class ZHFAddTitleAddressView: UIView {
     var titleMarr : NSMutableArray = NSMutableArray()
     lazy  var titleIDMarr : NSMutableArray = NSMutableArray()
     var tableViewMarr : NSMutableArray = NSMutableArray()
+    var resultArr: [NSDictionary] = [NSDictionary]()//本地数组
     lazy var titleBtns : NSMutableArray = NSMutableArray()
     //初始化这个地址视图
     func initAddressView() -> UIView {
+        //初始化本地数据（如果是网络请求请注释掉-----
+        let imagePath: String = Bundle.main.path(forResource: "location", ofType: "txt")!
+        var string : String = String()
+        do {
+            let string1: String  = try String.init(contentsOfFile: imagePath, encoding: String.Encoding.utf8)
+            string = string1
+        }catch { }
+        let  resData : Data = string.data(using: String.Encoding.utf8)!
+        do {
+            let resultArr1  = try JSONSerialization.jsonObject(with: resData as Data, options: JSONSerialization.ReadingOptions.mutableLeaves)
+            resultArr = resultArr1 as! [NSDictionary]
+        }catch { }
+    
+        //------到这里
         self.frame = CGRect.init(x: 0, y: 0, width: ScreenWidth, height: ScreenHeight)
         self.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0.4)
         self.isHidden = true
@@ -77,11 +93,7 @@ class ZHFAddTitleAddressView: UIView {
         cancelBtn.setImage(UIImage.init(named: "cancel"), for: UIControlState.normal)
         cancelBtn.addTarget(self, action: #selector(tapBtnAndcancelBtnClick), for: UIControlEvents.touchUpInside)
         addAddressView.addSubview(cancelBtn)
-       let tableView: UITableView = UITableView.init(frame: CGRect.init(x: 0, y: 0, width: ScreenWidth, height: 200), style: UITableViewStyle.plain)
-        tableView.separatorStyle = UITableViewCellSeparatorStyle.none
-        tableView.tag = 0
-        tableViewMarr.add(tableView)
-        titleMarr.add("请选择")
+        self.addTableViewAndTitle(tableViewTag: 0)
         //1.添加标题滚动视图
         setupTitleScrollView()
         //2.添加内容滚动视图
@@ -231,6 +243,9 @@ extension ZHFAddTitleAddressView:UITableViewDelegate,UITableViewDataSource{
         else if tableView.tag == 2{
             return self.countyMarr.count
         }
+        else if tableView.tag == 3{
+            return self.townMarr.count
+        }
         else{
            return 0
         }
@@ -253,13 +268,17 @@ extension ZHFAddTitleAddressView:UITableViewDelegate,UITableViewDataSource{
             let countyModel: CountyModel = self.countyMarr[indexPath.row] as! CountyModel
             cell?.textLabel?.text = "\(countyModel.county_name!)"
         }
+        else if tableView.tag == 3{
+            let townModel: TownModel = self.townMarr[indexPath.row] as! TownModel
+            cell?.textLabel?.text = "\(townModel.town_name!)"
+        }
         cell?.textLabel?.font = UIFont.systemFont(ofSize: 13)
         cell?.textLabel?.textColor = UIColor.gray
         cell?.selectionStyle = UITableViewCellSelectionStyle.none
         return cell!;
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if tableView.tag == 0 || tableView.tag == 1 {
+        if tableView.tag == 0 || tableView.tag == 1 || tableView.tag == 2 {
             if tableView.tag == 0{
                 let provinceModel: ProvinceModel = self.provinceMarr[indexPath.row] as! ProvinceModel
                 //1. 修改选中ID
@@ -288,16 +307,29 @@ extension ZHFAddTitleAddressView:UITableViewDelegate,UITableViewDataSource{
                 //网络请求，添加县城
                 self.getAddressMessageData(addressID: 3 ,provinceIdOrCityId: cityModel.id)
             }
+            else if tableView.tag == 2 {
+                let countyModel: CountyModel = self.countyMarr[indexPath.row] as! CountyModel
+                titleMarr.replaceObject(at: tableView.tag, with: countyModel.county_name!)
+                //1. 修改选中ID
+                if self.titleIDMarr.count > 2{
+                    self.titleIDMarr.replaceObject(at: tableView.tag, with: countyModel.id)
+                }
+                else{
+                    self.titleIDMarr.add(countyModel.id)
+                }
+                //网络请求，添加县城
+                self.getAddressMessageData(addressID: 4 ,provinceIdOrCityId: countyModel.id)
+            }
         }
-        else if tableView.tag == 2 {
-            let countyModel: CountyModel = self.countyMarr[indexPath.row] as! CountyModel
-            titleMarr.replaceObject(at: tableView.tag, with: countyModel.county_name!)
+        else if tableView.tag == 3 {
+            let townModel: TownModel = self.townMarr[indexPath.row] as! TownModel
+            titleMarr.replaceObject(at: tableView.tag, with: townModel.town_name!)
             //1. 修改选中ID
-            if self.titleIDMarr.count > 2{
-                self.titleIDMarr.replaceObject(at: tableView.tag, with: countyModel.id)
+            if self.titleIDMarr.count > 3{
+                self.titleIDMarr.replaceObject(at: tableView.tag, with: townModel.id)
             }
             else{
-                self.titleIDMarr.add(countyModel.id)
+                self.titleIDMarr.add(townModel.id)
             }
             setupAllTitle(selectId: tableView.tag)
             self.tapBtnAndcancelBtnClick()
@@ -305,6 +337,35 @@ extension ZHFAddTitleAddressView:UITableViewDelegate,UITableViewDataSource{
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 40
+    }
+    //添加tableView和title
+    func addTableViewAndTitle(tableViewTag: NSInteger){
+        let tableView2:UITableView = UITableView.init(frame: CGRect.init(x: 0, y: 0, width: ScreenWidth, height: 200), style: UITableViewStyle.plain)
+        tableView2.separatorStyle = UITableViewCellSeparatorStyle.none
+        tableView2.tag = tableViewTag
+        self.tableViewMarr.add(tableView2)
+        self.titleMarr.add("请选择")
+    }
+    //改变title
+    func changeTitle(replaceTitleMarrIndex:NSInteger){
+        self.titleMarr.replaceObject(at: replaceTitleMarrIndex, with: "请选择")
+        let index :NSInteger = self.titleMarr.index(of: "请选择")
+        let count:NSInteger = self.titleMarr.count
+        let loc: NSInteger = index + 1
+        let range:NSInteger = count - index
+        self.titleMarr.removeObjects(in: NSRange.init(location: loc, length: range - 1))
+        self.tableViewMarr.removeObjects(in: NSRange.init(location: loc, length: range - 1))
+    }
+    //移除多余的title和tableView,收回选择器
+    func removeTitleAndTableViewCancel(index:NSInteger){
+        let indexAddOne:NSInteger = index + 1
+        let indexsubOne:NSInteger = index - 1
+        if (self.tableViewMarr.count >= indexAddOne){
+            self.titleMarr.removeObjects(in: NSRange.init(location: index, length: self.titleMarr.count - indexAddOne))
+            self.tableViewMarr.removeObjects(in: NSRange.init(location: index, length: self.titleMarr.count - indexAddOne))
+        }
+        self.setupAllTitle(selectId: indexsubOne)
+        self.tapBtnAndcancelBtnClick()
     }
 }
 //防止手势冲突
@@ -316,66 +377,18 @@ extension ZHFAddTitleAddressView:UIGestureRecognizerDelegate{
         return true
     }
 }
-
-//网络请求*****你只需要修改这个方法里的内容就可使用
+//本地添加（所有的省都对应的有市，市对应的有县）
 extension ZHFAddTitleAddressView {
-    //本地添加（所有的省都对应的有市，市对应的有县）
     func getAddressMessageData(addressID: NSInteger, provinceIdOrCityId: NSInteger){
         switch addressID {
         case 1:
-            self.provinceMarr.removeAllObjects()
-            for i in 0 ..< 64{
-                let dic1 : [String : Any] = [ "id":"\(i)",
-                        "province_name" : "第\(i)省" ]
-                let provinceModel:ProvinceModel  =
-                    ProvinceModel.yy_model(with: dic1)!
-                self.provinceMarr.add(provinceModel)
-            }
+            self.case1()
         case 2:
-            self.cityMarr.removeAllObjects()
-            for i in 0 ..< 30{
-                let dic1 : [String : Any] = [ "id":"\(i)",
-                    "city_name" : "第\(i)市" ]
-                let cityModel:CityModel  =
-                    CityModel.yy_model(with: dic1)!
-                self.cityMarr.add(cityModel)
-            }
-            if self.tableViewMarr.count >= 2{
-                self.titleMarr.replaceObject(at: 1, with: "请选择")
-                if self.tableViewMarr.count > 2{
-                    self.titleMarr.removeLastObject()
-                    self.tableViewMarr.removeLastObject()
-                }
-            }
-            else{
-                let tableView2: UITableView = UITableView.init(frame: CGRect.init(x: 0, y: 0, width: ScreenWidth, height: 200), style: UITableViewStyle.plain)
-                tableView2.separatorStyle = UITableViewCellSeparatorStyle.none
-                tableView2.tag = 1
-                self.tableViewMarr.add(tableView2)
-                self.titleMarr.add("请选择")
-            }
-            self.setupAllTitle(selectId: 1)
+            self.case2(selectedID: provinceIdOrCityId)
         case 3:
-            self.countyMarr.removeAllObjects()
-            for i in 0 ..< 5{
-                let dic1 : [String : Any] = [ "id":"\(i)",
-                    "county_name" : "\(i)县" ]
-                let countyModel:CountyModel  =
-                    CountyModel.yy_model(with: dic1)!
-                self.countyMarr.add(countyModel)
-            }
-            if self.tableViewMarr.count > 2{
-                self.titleMarr.replaceObject(at: 2, with: "请选择")
-            }
-            else{
-                let tableView2: UITableView = UITableView.init(frame: CGRect.init(x: 0, y: 0, width: ScreenWidth, height: 200), style: UITableViewStyle.plain)
-                tableView2.separatorStyle = UITableViewCellSeparatorStyle.none
-                tableView2.tag = 2
-                self.tableViewMarr.add(tableView2)
-                self.titleMarr.add("请选择")
-            }
-            self.setupAllTitle(selectId: 2)
-            
+            self.case3(selectedID: provinceIdOrCityId)
+        case 4:
+            self.case4(selectedID: provinceIdOrCityId)
         default:
             break;
         }
@@ -384,161 +397,262 @@ extension ZHFAddTitleAddressView {
             tableView1.reloadData()
         }
     }
-    // 以下是网络请求方法
-//    func getAddressMessageData(addressID: NSInteger, provinceIdOrCityId: NSInteger) {
-//        var addressUrl =  String()
-//        var parameters : NSDictionary =  NSDictionary()
-//        switch addressID {
-//        case 1:
-//            //获取省份的URL
-//            addressUrl = "getProvinceAddressUrl"
-//            //请求省份需要传递的参数
-//            parameters = ["user_id" : userID]
-//        case 2:
-//            //获取市区的URL
-//            addressUrl = "getCityAddressUrl"
-//            //请求市区需要传递的参数
-//            parameters = ["province_id" : "5",
-//            "user_id" : userID]
-//        case 3:
-//            //获取县的URL
-//            addressUrl = "getCountyAddressUrl"
-//            //请求县需要传递的参数
-//            parameters = ["city_id" : "4",
-//                          "user_id" : userID]
-//        default:
-//            break;
-//        }
-//        //第三方加载工具
-//        self.addAddressView.chrysan.show()
-//        //网络请求
-//        NetworkTools.shareInstance.request(methodType: .POST, urlString:addressUrl, parameters: parameters as! [String : AnyObject]) { (result, error) in
-//            self.addAddressView.chrysan.hide()
-//            if result != nil
-//            {
-//                let dic = result as! NSDictionary
-//                let code : NSInteger = dic["code"] as! NSInteger
-//                if code == 200{
-//                    switch addressID {
-//                    case 1:
-//                        //拿到省列表
-//                       let  provinceArr: NSArray = dic["data"] as! NSArray
-//                       self.case1(provinceArr: provinceArr)
-//                    case 2:
-//                        //拿到市列表
-//                        let  cityArr: NSArray = dic["data"] as! NSArray
-//                        self.case2(cityArr: cityArr)
-//
-//                    case 3:
-//                        //拿到县列表
-//                        let  countyArr: NSArray = dic["data"] as! NSArray
-//                        self.case3(countyArr: countyArr)
-//                    default:
-//                        break;
-//                    }
-//                    if self.tableViewMarr.count >= addressID{
-//                        let tableView1: UITableView  = self.tableViewMarr[addressID - 1] as! UITableView
-//                        tableView1.reloadData()
-//                    }
-//                }
-//                else{
-//                   self.addAddressView.chrysan.showMessage(dic["msg"] as! String, hideDelay: 2.0)
-//                }
-//            }
-//            else{
-//                self.addAddressView.chrysan.showMessage(error as! String, hideDelay: 2.0)
-//            }
-//        }
-//    }
-}
-/*下面这个主要是逻辑分析和数据处理
- 只需要找到 ProvinceModel类，把其属性修改成你需要的即可
- 以下方法：对没有下一级的情况，进行了逻辑判断（建议不要随意更改。）
- */
-extension ZHFAddTitleAddressView{
-    func case1(provinceArr: NSArray ) {
-        if provinceArr.count > 0{
-            self.provinceMarr.removeAllObjects()
-            for i in 0 ..< provinceArr.count{
-                let dic1 : [String : Any] = provinceArr[i] as! [String : Any]
-                let provinceModel:ProvinceModel  =
-                    ProvinceModel.yy_model(with: dic1)!
-                self.provinceMarr.add(provinceModel)
+    func case1() {
+        self.provinceMarr.removeAllObjects()
+        if resultArr.count > 0 {
+            for dic: NSDictionary in resultArr{
+                if (dic["parentid"] as! String == "0"){
+                    let dic1: [String : Any] = [
+                        "id":dic["id"]!,
+                        "province_name":dic["name"]!
+                    ];
+                    let provinceModel:ProvinceModel  =
+                        ProvinceModel.yy_model(with: dic1)!
+                    self.provinceMarr.add(provinceModel)
+                }
             }
         }
         else{
             self.tapBtnAndcancelBtnClick()
         }
     }
-    func case2(cityArr: NSArray ) {
-        if cityArr.count > 0{
-            self.cityMarr.removeAllObjects()
-            for i in 0 ..< cityArr.count{
-                let dic1 : [String : Any] = cityArr[i] as! [String : Any]
+    func case2(selectedID: NSInteger) {
+        self.cityMarr.removeAllObjects()
+        for dic: NSDictionary in resultArr {
+             if (dic["parentid"] as! String == "\(selectedID)") {
+                let dic1: [String : Any] = [
+                    "id":dic["id"]!,
+                    "city_name":dic["name"]!];
                 let cityModel:CityModel  =
                     CityModel.yy_model(with: dic1)!
                 self.cityMarr.add(cityModel)
             }
-            if self.tableViewMarr.count >= 2{
-                self.titleMarr.replaceObject(at: 1, with: "请选择")
-                if self.tableViewMarr.count > 2{
-                    self.titleMarr.removeLastObject()
-                    self.tableViewMarr.removeLastObject()
-                }
-            }
-            else{
-                let tableView2: UITableView = UITableView.init(frame: CGRect.init(x: 0, y: 0, width: ScreenWidth, height: 200), style: UITableViewStyle.plain)
-                tableView2.separatorStyle = UITableViewCellSeparatorStyle.none
-                tableView2.tag = 1
-                self.tableViewMarr.add(tableView2)
-                self.titleMarr.add("请选择")
-            }
+        }
+        if (self.tableViewMarr.count >= 2){
+            self.changeTitle(replaceTitleMarrIndex: 1)
+        }
+        else{
+            self.addTableViewAndTitle(tableViewTag: 1)
+        }
+        if (self.cityMarr.count > 0) {
             self.setupAllTitle(selectId: 1)
         }
         else{
             //没有对应的市
-            if self.tableViewMarr.count > 2{
-                self.titleMarr.removeLastObject()
-                self.tableViewMarr.removeLastObject()
-            }
-            if self.tableViewMarr.count == 2{
-                self.titleMarr.removeLastObject()
-                self.tableViewMarr.removeLastObject()
-            }
-            self.setupAllTitle(selectId: 0)
-            self.tapBtnAndcancelBtnClick()
+            self.removeTitleAndTableViewCancel(index: 1)
         }
     }
-    func case3(countyArr: NSArray ) {
-        if countyArr.count > 0{
-            self.countyMarr.removeAllObjects()
-            for i in 0 ..< countyArr.count{
-                let dic1 : [String : Any] = countyArr[i] as! [String : Any]
+    func case3(selectedID: NSInteger) {
+        self.countyMarr.removeAllObjects()
+        for dic: NSDictionary in resultArr {
+            if (dic["parentid"] as! String == "\(selectedID)") {
+                let dic1: [String : Any] = [
+                    "id":dic["id"]!,
+                    "county_name":dic["name"]!];
                 let countyModel:CountyModel  =
                     CountyModel.yy_model(with: dic1)!
                 self.countyMarr.add(countyModel)
             }
-            if self.tableViewMarr.count > 2{
-                self.titleMarr.replaceObject(at: 2, with: "请选择")
-            }
-            else{
-                let tableView2: UITableView = UITableView.init(frame: CGRect.init(x: 0, y: 0, width: ScreenWidth, height: 200), style: UITableViewStyle.plain)
-                tableView2.separatorStyle = UITableViewCellSeparatorStyle.none
-                tableView2.tag = 2
-                self.tableViewMarr.add(tableView2)
-                self.titleMarr.add("请选择")
-            }
+        }
+        if (self.tableViewMarr.count >= 3){
+             self.changeTitle(replaceTitleMarrIndex: 2)
+        }
+        else{
+           self.addTableViewAndTitle(tableViewTag: 2)
+        }
+        if (self.countyMarr.count > 0) {
             self.setupAllTitle(selectId: 2)
         }
         else{
             //没有对应的县
-            if self.tableViewMarr.count > 2{
-                self.titleMarr.removeLastObject()
-                self.tableViewMarr.removeLastObject()
-            }
-            self.setupAllTitle(selectId: 1)
-            self.tapBtnAndcancelBtnClick()
+            self.removeTitleAndTableViewCancel(index: 2)
         }
     }
+    func case4(selectedID: NSInteger) {
+        self.townMarr.removeAllObjects()
+        for dic: NSDictionary in resultArr {
+            if (dic["parentid"] as! String == "\(selectedID)") {
+                let dic1: [String : Any] = [
+                    "id":dic["id"]!,
+                    "town_name":dic["name"]!];
+                let townModel:TownModel  =
+                    TownModel.yy_model(with: dic1)!
+                self.townMarr.add(townModel)
+            }
+        }
+        if (self.tableViewMarr.count >= 4){
+            self.changeTitle(replaceTitleMarrIndex: 3)
+        }
+        else{
+            self.addTableViewAndTitle(tableViewTag: 3)
+        }
+        if (self.townMarr.count > 0) {
+            self.setupAllTitle(selectId: 3)
+        }
+        else{//没有对应的乡镇
+            self.removeTitleAndTableViewCancel(index: 3)
+}}
 }
+//网络请求*****你只需要修改这个方法里的内容就可使用
+// 以下是网络请求方法
+//extension ZHFAddTitleAddressView{
+//
+    //    func getAddressMessageData(addressID: NSInteger, provinceIdOrCityId: NSInteger) {
+    //        var addressUrl =  String()
+    //        var parameters : NSDictionary =  NSDictionary()
+    //        switch addressID {
+    //        case 1:
+    //            //获取省份的URL
+    //            addressUrl = "getProvinceAddressUrl"
+    //            //请求省份需要传递的参数
+    //            parameters = ["user_id" : userID]
+    //        case 2:
+    //            //获取市区的URL
+    //            addressUrl = "getCityAddressUrl"
+    //            //请求市区需要传递的参数
+    //            parameters = ["province_id" : "5",
+    //            "user_id" : userID]
+    //        case 3:
+    //            //获取县的URL
+    //            addressUrl = "getCountyAddressUrl"
+    //            //请求县需要传递的参数
+    //            parameters = ["city_id" : "4",
+    //                          "user_id" : userID]
+    //        case 4:
+    //            //获取乡镇的URL
+    //            addressUrl = "getTownAddressUrl"
+    //            //请求县需要传递的参数
+    //            parameters = ["county_id" : "3",
+    //                          "user_id" : userID]
+    //        default:
+    //            break;
+    //        }
+    //        //第三方加载工具
+    //        self.addAddressView.chrysan.show()
+    //        //网络请求
+    //        NetworkTools.shareInstance.request(methodType: .POST, urlString:addressUrl, parameters: parameters as! [String : AnyObject]) { (result, error) in
+    //            self.addAddressView.chrysan.hide()
+    //            if result != nil
+    //            {
+    //                let dic = result as! NSDictionary
+    //                let code : NSInteger = dic["code"] as! NSInteger
+    //                if code == 200{
+    //                    switch addressID {
+    //                    case 1:
+    //                        //拿到省列表
+    //                       let  provinceArr: NSArray = dic["data"] as! NSArray
+    //                       self.case1(provinceArr: provinceArr)
+    //                    case 2:
+    //                        //拿到市列表
+    //                        let  cityArr: NSArray = dic["data"] as! NSArray
+    //                        self.case2(cityArr: cityArr)
+    //
+    //                    case 3:
+    //                        //拿到县列表
+    //                        let  countyArr: NSArray = dic["data"] as! NSArray
+    //                        self.case3(countyArr: countyArr)
+    //                    case 4:
+    //                        //拿到乡镇列表
+//                            let  townArr: NSArray = dic["data"] as! NSArray
+//                            self.case3(townArr: townArr)
+    //                    default:
+    //                        break;
+    //                    }
+    //                    if self.tableViewMarr.count >= addressID{
+    //                        let tableView1: UITableView  = self.tableViewMarr[addressID - 1] as! UITableView
+    //                        tableView1.reloadData()
+    //                    }
+    //                }
+    //                else{
+    //                   self.addAddressView.chrysan.showMessage(dic["msg"] as! String, hideDelay: 2.0)
+    //                }
+    //            }
+    //            else{
+    //                self.addAddressView.chrysan.showMessage(error as! String, hideDelay: 2.0)
+    //            }
+    //        }
+    //    }
+/*下面这个主要是逻辑分析和数据处理
+ 只需要找到 ProvinceModel类，把其属性修改成你需要的即可
+ 以下方法：对没有下一级的情况，进行了逻辑判断（建议不要随意更改。）
+ */
+//    func case1(provinceArr: NSArray ) {
+//        if provinceArr.count > 0{
+//            self.provinceMarr.removeAllObjects()
+//            for i in 0 ..< provinceArr.count{
+//                let dic1 : [String : Any] = provinceArr[i] as! [String : Any]
+//                let provinceModel:ProvinceModel  =
+//                    ProvinceModel.yy_model(with: dic1)!
+//                self.provinceMarr.add(provinceModel)
+//            }
+//        }
+//        else{
+//            self.tapBtnAndcancelBtnClick()
+//        }
+//    }
+//    func case2(cityArr: NSArray) {
+//        if cityArr.count > 0{
+//            self.cityMarr.removeAllObjects()
+//            for i in 0 ..< cityArr.count{
+//                let dic1 : [String : Any] = cityArr[i] as! [String : Any]
+//                let cityModel:CityModel  =
+//                    CityModel.yy_model(with: dic1)!
+//                self.cityMarr.add(cityModel)
+//            }
+//            if self.tableViewMarr.count >= 2{
+//                 self.changeTitle(replaceTitleMarrIndex: 1)
+//            }
+//            else{
+//                self.addTableViewAndTitle(tableViewTag: 1)
+//            }
+//            self.setupAllTitle(selectId: 1)
+//        }
+//        else{
+//            //没有对应的市
+//            self.removeTitleAndTableViewCancel(index: 1)
+//        }
+//    }
+//    func case3(countyArr: NSArray ) {
+//        if countyArr.count > 0{
+//            self.countyMarr.removeAllObjects()
+//            for i in 0 ..< countyArr.count{
+//                let dic1 : [String : Any] = countyArr[i] as! [String : Any]
+//                let countyModel:CountyModel  =
+//                    CountyModel.yy_model(with: dic1)!
+//                self.countyMarr.add(countyModel)
+//            }
+//            if (self.tableViewMarr.count >= 3){
+//                self.changeTitle(replaceTitleMarrIndex: 2)
+//            }
+//            else{
+//                 self.addTableViewAndTitle(tableViewTag: 2)
+//            }
+//            self.setupAllTitle(selectId: 2)
+//        }
+//        else{
+//            //没有对应的县
+//           self.removeTitleAndTableViewCancel(index: 2)
+//        }
+//}
+//    func case4(townArr: NSArray) {
+//        self.townMarr.removeAllObjects()
+//        if townArr.count > 0{
+//        for i in 0 ..< townArr.count{
+//            let dic1 : [String : Any] = townArr[i] as! [String : Any]
+//            let townModel:TownModel  =
+//                TownModel.yy_model(with: dic1)!
+//            self.townMarr.add(townModel)
+//        }
+//        if (self.tableViewMarr.count >= 4){
+//             self.changeTitle(replaceTitleMarrIndex: 3)
+//        }
+//        else{
+//          self.addTableViewAndTitle(tableViewTag: 3)
+//        }
+//            self.setupAllTitle(selectId: 3)
+//        }
+//        else{//没有对应的乡镇
+//           self.removeTitleAndTableViewCancel(index: 3)
+//        }}
+//}
 
