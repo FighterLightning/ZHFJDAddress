@@ -22,8 +22,6 @@
  该方法里的代码，已写清楚
  一个是模拟数据。
  二是网络请求数据。
- （因本人网络请求是局域网，所以网络请求的思路已在方法里写明，三个url，
- 三个字典，修改成自己的即可使用。）
  */
 
 import UIKit
@@ -41,20 +39,20 @@ class ZHFAddTitleAddressView: UIView {
   var title: String = "所在地区"
   var isclick: Bool = false  //判断是滚动还是点击
   var addAddressView: UIView =  UIView()
-    lazy var provinceMarr:NSMutableArray = NSMutableArray() //省
-    lazy var cityMarr:NSMutableArray = NSMutableArray() //市
-    lazy var countyMarr:NSMutableArray = NSMutableArray() //县
-    lazy var townMarr:NSMutableArray = NSMutableArray() //乡镇
-    var titleScrollView :UIScrollView = UIScrollView()
-    var contentScrollView :UIScrollView = UIScrollView()
-    var radioBtn :UIButton = UIButton()
-    var lineLabel :UILabel = UILabel()
-    let titleScrollViewH :CGFloat = 37
-    var titleMarr : NSMutableArray = NSMutableArray()
-    lazy  var titleIDMarr : NSMutableArray = NSMutableArray()
-    var tableViewMarr : NSMutableArray = NSMutableArray()
-    var resultArr: [NSDictionary] = [NSDictionary]()//本地数组
-    lazy var titleBtns : NSMutableArray = NSMutableArray()
+  lazy var provinceMarr:NSMutableArray = NSMutableArray() //省
+  lazy var cityMarr:NSMutableArray = NSMutableArray() //市
+  lazy var countyMarr:NSMutableArray = NSMutableArray() //县
+  lazy var townMarr:NSMutableArray = NSMutableArray() //乡镇
+  var titleScrollView :UIScrollView = UIScrollView()
+  var contentScrollView :UIScrollView = UIScrollView()
+  var radioBtn :UIButton = UIButton()
+  var lineLabel :UILabel = UILabel()
+  let titleScrollViewH :CGFloat = 37
+  var titleMarr : NSMutableArray = NSMutableArray()
+  lazy  var titleIDMarr : NSMutableArray = NSMutableArray()
+  var tableViewMarr : NSMutableArray = NSMutableArray()
+  var resultArr: [NSDictionary] = [NSDictionary]()//本地数组
+  lazy var titleBtns : NSMutableArray = NSMutableArray()
     //初始化这个地址视图
     func initAddressView() -> UIView {
         //初始化本地数据（如果是网络请求请注释掉-----
@@ -69,7 +67,6 @@ class ZHFAddTitleAddressView: UIView {
             let resultArr1  = try JSONSerialization.jsonObject(with: resData as Data, options: JSONSerialization.ReadingOptions.mutableLeaves)
             resultArr = resultArr1 as! [NSDictionary]
         }catch { }
-    
         //------到这里
         self.frame = CGRect.init(x: 0, y: 0, width: ScreenWidth, height: ScreenHeight)
         self.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0.4)
@@ -145,7 +142,6 @@ extension ZHFAddTitleAddressView :UIScrollViewDelegate{
         let lineView : UIView = UIView.init(frame: CGRect.init(x: 0, y: titleScrollView.frame.maxY, width: ScreenWidth, height: 0.5))
         lineView.backgroundColor = UIColor.gray
         addAddressView.addSubview(lineView)
-        
     }
     func setupContentScrollView(){
         //ContentScrollView
@@ -174,10 +170,10 @@ extension ZHFAddTitleAddressView :UIScrollViewDelegate{
             titleBtn.tag = i
             titleBtn.setTitleColor(UIColor.black, for: UIControlState.normal)
             titleBtn.setTitleColor(UIColor.red, for: UIControlState.selected)
-           titleBtn.isSelected = false
+            titleBtn.isSelected = false
             titleBtn.titleLabel?.font = UIFont.systemFont(ofSize: 13)
             titleBtn.frame = CGRect.init(x: x, y: 0, width: titlelenth, height: btnH)
-             x  = (titlelenth + 10) + x
+            x  = (titlelenth + 10) + x
             titleBtn.addTarget(self, action: #selector(titleBtnClick), for: UIControlEvents.touchUpInside)
             self.titleBtns.add(titleBtn)
             if i == selectId {
@@ -214,7 +210,6 @@ extension ZHFAddTitleAddressView :UIScrollViewDelegate{
         contentView.dataSource = self
         self.contentScrollView.addSubview(contentView)
     }
-   
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let leftI :NSInteger  = NSInteger(scrollView.contentOffset.x / ScreenWidth);
         if CGFloat(scrollView.contentOffset.x / ScreenWidth) != CGFloat(leftI){
@@ -290,9 +285,8 @@ extension ZHFAddTitleAddressView:UITableViewDelegate,UITableViewDataSource{
                 }
                 //2.修改标题
                 self.titleMarr.replaceObject(at: tableView.tag, with: provinceModel.province_name!)
-                //请求网络 添加市区
+                //添加市区
                 self.getAddressMessageData(addressID: 2 ,provinceIdOrCityId: provinceModel.id)
-                
             }
             else if tableView.tag == 1 {
                 let cityModel: CityModel = self.cityMarr[indexPath.row] as! CityModel
@@ -304,7 +298,7 @@ extension ZHFAddTitleAddressView:UITableViewDelegate,UITableViewDataSource{
                 else{
                     self.titleIDMarr.add(cityModel.id)
                 }
-                //网络请求，添加县城
+                //添加县城
                 self.getAddressMessageData(addressID: 3 ,provinceIdOrCityId: cityModel.id)
             }
             else if tableView.tag == 2 {
@@ -317,7 +311,7 @@ extension ZHFAddTitleAddressView:UITableViewDelegate,UITableViewDataSource{
                 else{
                     self.titleIDMarr.add(countyModel.id)
                 }
-                //网络请求，添加县城
+                //添加乡镇
                 self.getAddressMessageData(addressID: 4 ,provinceIdOrCityId: countyModel.id)
             }
         }
