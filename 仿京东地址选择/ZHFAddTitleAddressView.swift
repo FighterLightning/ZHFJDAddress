@@ -33,6 +33,7 @@ protocol ZHFAddTitleAddressViewDelegate {
     func cancelBtnClick( titleAddress: String,titleID: String)
 }
 class ZHFAddTitleAddressView: UIView {
+let AddressAdministerCellIdentifier  = "AddressAdministerCellIdentifier"
   var delegate: ZHFAddTitleAddressViewDelegate?
   var userID :NSInteger = 0
   var defaultHeight: CGFloat = 200
@@ -53,6 +54,8 @@ class ZHFAddTitleAddressView: UIView {
   var tableViewMarr : NSMutableArray = NSMutableArray()
   var resultArr: [NSDictionary] = [NSDictionary]()//本地数组
   lazy var titleBtns : NSMutableArray = NSMutableArray()
+  var PCCTID: NSInteger = -1
+    
     //初始化这个地址视图
     func initAddressView() -> UIView {
         //初始化本地数据（如果是网络请求请注释掉-----
@@ -190,10 +193,13 @@ extension ZHFAddTitleAddressView :UIScrollViewDelegate{
         radioBtn.isSelected = false
         titleBtn.isSelected = true
         setupOneTableView(btnTag :titleBtn.tag)
-        let x :CGFloat  = CGFloat(titleBtn.tag) * ScreenWidth;
-        self.contentScrollView.contentOffset = CGPoint.init(x: x, y: 0);
+        let x :CGFloat  = CGFloat(titleBtn.tag) * ScreenWidth
         lineLabel.frame = CGRect.init(x: titleBtn.frame.minX, y: titleScrollViewH - 3, width: titleBtn.frame.size.width, height: 3)
-        radioBtn = titleBtn;
+        UIView.animate(withDuration: 0.25) {
+            self.contentScrollView.contentOffset = CGPoint.init(x: x, y: 0)
+        }
+       // self.contentScrollView.setContentOffset(CGPoint.init(x: x, y: 0), animated: true)//使用这个动画效果会出现bug
+        radioBtn = titleBtn
         isclick = true
     }
     func setupOneTableView(btnTag: NSInteger){
@@ -246,33 +252,46 @@ extension ZHFAddTitleAddressView:UITableViewDelegate,UITableViewDataSource{
         }
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let AddressAdministerCellIdentifier  = "AddressAdministerCellIdentifier"
-        var cell = tableView.dequeueReusableCell(withIdentifier: AddressAdministerCellIdentifier)
-        if cell == nil {
-            cell = UITableViewCell(style:.default, reuseIdentifier: AddressAdministerCellIdentifier)
+        var cell :AddressCell = tableView.dequeueReusableCell(withIdentifier: AddressAdministerCellIdentifier, for: indexPath) as! AddressCell
+        if cell.isEqual(nil){
+            cell = AddressCell(style:.default, reuseIdentifier: AddressAdministerCellIdentifier)
         }
         if tableView.tag == 0 {
             let provinceModel: ProvinceModel = self.provinceMarr[indexPath.row] as! ProvinceModel
-            cell?.textLabel?.text = "\(provinceModel.province_name!)"
+            cell.titleString = provinceModel.province_name!
+            self.PCCTID = provinceModel.id
         }
         else if tableView.tag == 1 {
            let cityModel: CityModel = self.cityMarr[indexPath.row] as! CityModel
-           cell?.textLabel?.text = "\(cityModel.city_name!)"
+            cell.titleString = cityModel.city_name!
+            self.PCCTID = cityModel.id
         }
         else if tableView.tag == 2{
             let countyModel: CountyModel = self.countyMarr[indexPath.row] as! CountyModel
-            cell?.textLabel?.text = "\(countyModel.county_name!)"
+            cell.titleString = countyModel.county_name!
+            self.PCCTID = countyModel.id
         }
         else if tableView.tag == 3{
             let townModel: TownModel = self.townMarr[indexPath.row] as! TownModel
-            cell?.textLabel?.text = "\(townModel.town_name!)"
+            cell.titleString = townModel.town_name!
+            self.PCCTID = townModel.id
         }
-        cell?.textLabel?.font = UIFont.systemFont(ofSize: 13)
-        cell?.textLabel?.textColor = UIColor.gray
-        cell?.selectionStyle = UITableViewCellSelectionStyle.none
-        return cell!;
+        if titleIDMarr.count > tableView.tag{
+            let  pcctId :NSInteger = titleIDMarr[tableView.tag] as! NSInteger
+            if self.PCCTID == pcctId{
+              cell.isChangeRed = true
+            }
+            else{
+                cell.isChangeRed = false
+            }
+        }
+        cell.selectionStyle = UITableViewCellSelectionStyle.none
+        return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        //先刷新当前选中的tableView
+        let tableView: UITableView  = self.tableViewMarr[tableView.tag] as! UITableView
+        tableView.reloadData()
         if tableView.tag == 0 || tableView.tag == 1 || tableView.tag == 2 {
             if tableView.tag == 0{
                 let provinceModel: ProvinceModel = self.provinceMarr[indexPath.row] as! ProvinceModel
@@ -337,6 +356,7 @@ extension ZHFAddTitleAddressView:UITableViewDelegate,UITableViewDataSource{
         let tableView2:UITableView = UITableView.init(frame: CGRect.init(x: 0, y: 0, width: ScreenWidth, height: 200), style: UITableViewStyle.plain)
         tableView2.separatorStyle = UITableViewCellSeparatorStyle.none
         tableView2.tag = tableViewTag
+        tableView2.register(AddressCell.self, forCellReuseIdentifier: AddressAdministerCellIdentifier)
         self.tableViewMarr.add(tableView2)
         self.titleMarr.add("请选择")
     }

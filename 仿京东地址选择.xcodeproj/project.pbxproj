@@ -14,8 +14,9 @@
 		E32B77F81FDFC1A50095BE8C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E32B77F71FDFC1A50095BE8C /* Assets.xcassets */; };
 		E32B77FB1FDFC1A50095BE8C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E32B77F91FDFC1A50095BE8C /* LaunchScreen.storyboard */; };
 		E32B78031FDFC1BB0095BE8C /* ProvinceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E32B78021FDFC1BB0095BE8C /* ProvinceModel.swift */; };
-		E32B78051FDFC1C50095BE8C /* ZHFAddTitleAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E32B78041FDFC1C50095BE8C /* ZHFAddTitleAddressView.swift */; };
 		E32B78091FDFC6B70095BE8C /* NetworkTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = E32B78081FDFC6B70095BE8C /* NetworkTools.swift */; };
+		E335568720D25AC000B1C5E7 /* ZHFAddTitleAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E335568520D25AC000B1C5E7 /* ZHFAddTitleAddressView.swift */; };
+		E335568820D25AC000B1C5E7 /* AddressCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E335568620D25AC000B1C5E7 /* AddressCell.swift */; };
 		E33EFD8720B567BF00E873A8 /* location.txt in Resources */ = {isa = PBXBuildFile; fileRef = E33EFD8620B567BF00E873A8 /* location.txt */; };
 /* End PBXBuildFile section */
 
@@ -31,8 +32,9 @@
 		E32B77FA1FDFC1A50095BE8C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E32B77FC1FDFC1A50095BE8C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E32B78021FDFC1BB0095BE8C /* ProvinceModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProvinceModel.swift; sourceTree = "<group>"; };
-		E32B78041FDFC1C50095BE8C /* ZHFAddTitleAddressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZHFAddTitleAddressView.swift; sourceTree = "<group>"; };
 		E32B78081FDFC6B70095BE8C /* NetworkTools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkTools.swift; sourceTree = "<group>"; };
+		E335568520D25AC000B1C5E7 /* ZHFAddTitleAddressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZHFAddTitleAddressView.swift; sourceTree = "<group>"; };
+		E335568620D25AC000B1C5E7 /* AddressCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressCell.swift; sourceTree = "<group>"; };
 		E33EFD8620B567BF00E873A8 /* location.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = location.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -89,7 +91,8 @@
 				E33EFD8620B567BF00E873A8 /* location.txt */,
 				E32B78021FDFC1BB0095BE8C /* ProvinceModel.swift */,
 				E32B78081FDFC6B70095BE8C /* NetworkTools.swift */,
-				E32B78041FDFC1C50095BE8C /* ZHFAddTitleAddressView.swift */,
+				E335568620D25AC000B1C5E7 /* AddressCell.swift */,
+				E335568520D25AC000B1C5E7 /* ZHFAddTitleAddressView.swift */,
 				E32B77F01FDFC1A50095BE8C /* AppDelegate.swift */,
 				E32B77F21FDFC1A50095BE8C /* ViewController.swift */,
 				E32B77F41FDFC1A50095BE8C /* Main.storyboard */,
@@ -226,9 +229,10 @@
 			files = (
 				E32B78031FDFC1BB0095BE8C /* ProvinceModel.swift in Sources */,
 				E32B78091FDFC6B70095BE8C /* NetworkTools.swift in Sources */,
+				E335568720D25AC000B1C5E7 /* ZHFAddTitleAddressView.swift in Sources */,
 				E32B77F31FDFC1A50095BE8C /* ViewController.swift in Sources */,
+				E335568820D25AC000B1C5E7 /* AddressCell.swift in Sources */,
 				E32B77F11FDFC1A50095BE8C /* AppDelegate.swift in Sources */,
-				E32B78051FDFC1C50095BE8C /* ZHFAddTitleAddressView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -367,11 +371,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = E2W28EC2KB;
+				DEVELOPMENT_TEAM = N82XM546LU;
 				INFOPLIST_FILE = "仿京东地址选择/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "Lighting.com.-------";
+				PRODUCT_BUNDLE_IDENTIFIER = Lighting.com;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -384,11 +388,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = E2W28EC2KB;
+				DEVELOPMENT_TEAM = N82XM546LU;
 				INFOPLIST_FILE = "仿京东地址选择/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "Lighting.com.-------";
+				PRODUCT_BUNDLE_IDENTIFIER = Lighting.com;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;

@@ -27,6 +27,7 @@ class ViewController: UIViewController,ZHFAddTitleAddressViewDelegate {
     }
     func setUI()  {
         //这是用户的ID
+        addTitleAddressView.title = "选择地址"
         addTitleAddressView.userID = 7
         addTitleAddressView.delegate = self
         addTitleAddressView.defaultHeight = 350
