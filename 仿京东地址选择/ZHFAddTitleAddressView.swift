@@ -556,19 +556,22 @@ extension ZHFAddTitleAddressView {
     //                        //拿到省列表
     //                       let  provinceArr: NSArray = dic["data"] as! NSArray
     //                       self.case1(provinceArr: provinceArr)
+   //                        break;
     //                    case 2:
     //                        //拿到市列表
     //                        let  cityArr: NSArray = dic["data"] as! NSArray
     //                        self.case2(cityArr: cityArr)
-    //
+    //                        break;
     //                    case 3:
     //                        //拿到县列表
     //                        let  countyArr: NSArray = dic["data"] as! NSArray
     //                        self.case3(countyArr: countyArr)
+   //                        break;
     //                    case 4:
     //                        //拿到乡镇列表
 //                            let  townArr: NSArray = dic["data"] as! NSArray
 //                            self.case3(townArr: townArr)
+   //                        break;
     //                    default:
     //                        break;
     //                    }
