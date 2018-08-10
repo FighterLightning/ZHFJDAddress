@@ -3,7 +3,7 @@
 
 
  
- ![](./ZHFJDAddressOC/1.gif)
+ ![](./京东地址选择器/1.gif)
 
 
 [OC版本地址：](https://github.com/FighterLightning/ZHFJDAddressOC.git) 
