@@ -6,7 +6,7 @@
  ![](./仿京东地址选择/1.gif)
 
 
-[OC版本地址：](https://github.com/FighterLightning/ZHFJDAddressOC.git) 
+OC版本地址：
 
 `
 https://github.com/FighterLightning/ZHFJDAddressOC.git
