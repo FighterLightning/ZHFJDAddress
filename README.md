@@ -17,9 +17,9 @@ https://github.com/FighterLightning/ZHFJDAddressOC.git
  1. 下载该demo。把ProvinceModel.swift（必须），ZHFAddTitleAddressView.swift(必须) AddressCell.swift(必须)  NetworkTools.swift(可用自己封装的)拖进项目
 
  2. 在 Podfile 中添加:
- * `pod 'AFNetworking'`//网络请求（建议用Swift版本的）
+ * `pod 'AFNetworking'`//网络请求（建议用Swift版本的 Alamofire 或者封装过的Moya）
  
- * `pod 'YYModel'`//字典转模型（建议用Swift版本的）
+ * `pod 'YYModel'`//字典转模型（建议用Swift版本的 SwiftyJSON）
 
  * `pod 'Chrysan', :git => 'https://github.com/Harley-xk/Chrysan.git'`//第三方加载框（根据需求进行添加）
  	
