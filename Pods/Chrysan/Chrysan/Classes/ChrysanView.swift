@@ -25,30 +25,11 @@ public class ChrysanView: UIView {
         case custom
     }
     
-    /// 菊花在视图中水平方向上的偏移，默认为正中
-    public var offsetX: CGFloat = 0
-    /// 菊花在视图中竖直方向上的偏移，默认为正中
-    public var offsetY: CGFloat = 0
-    
-    /// 遮罩颜色，遮挡 UI 的视图层的颜色，默认透明
-    public var maskColor = UIColor.clear
-    
-    /// 菊花背景样式，使用系统自带的毛玻璃特效，默认为黑色样式
-    public var hudStyle = UIBlurEffectStyle.dark {
-        didSet {
-            effectView.effect = UIBlurEffect(style: hudStyle)
-        }
-    }
-    
-    /// 菊花的样式，默认为 white large
-    public var chrysanStyle = UIActivityIndicatorViewStyle.whiteLarge
-    
-    /// icon 及文字颜色，默认为白色
-    public var color = UIColor.white
+    /// UI 样式配置选项，下次显示 HUD 时生效
+    open var config: ChrysanConfig = .default()
     
     /// 自定义的 icon 图片
-    public var customIcon: UIImage? = nil
-    
+    internal var customIcon: UIImage? = nil
     
     // MARK: - APIs
     
@@ -120,17 +101,7 @@ public class ChrysanView: UIView {
     }
     
     public func hide() {
-        
-        if !isShown {
-            return
-        }
-        
-        isShown = false
-        
-        layer.removeAllAnimations()
-        self.alpha = 0
-        self.isHidden = true
-        self.reset()
+        hideHUD()
     }
     
     // MARK: - Private
@@ -204,24 +175,31 @@ public class ChrysanView: UIView {
         }
     }
     
-    private func pinToParent(withEdge edge: NSLayoutAttribute) -> NSLayoutConstraint {
+    private func pinToParent(withEdge edge: NSLayoutConstraint.Attribute) -> NSLayoutConstraint {
         return NSLayoutConstraint(item: parent, attribute: edge, relatedBy: .equal, toItem: self, attribute: edge, multiplier: 1, constant: 0)
     }
     
     private func updateAndShow() {
         
+        if iconView.isAnimating {
+            iconView.stopAnimating()
+            iconView.animationImages = nil
+        }
+
         messageLabel.text = message;
         updateMessageTextAlignment()
         
-        positionX.constant = offsetX
-        positionY.constant = offsetY
+        positionX.constant = config.offsetX
+        positionY.constant = config.offsetY
         
-        backgroundView.backgroundColor = maskColor
-        
-        iconView.tintColor = color
-        activityView.tintColor = color
-        progressView.tintColor = color
-        messageLabel.textColor = color
+        backgroundView.backgroundColor = config.maskColor
+
+        effectView.effect = UIBlurEffect(style: config.hudStyle)
+
+        iconView.tintColor = config.color
+        activityView.tintColor = config.color
+        progressView.tintColor = config.color
+        messageLabel.textColor = config.color
         
         if message != nil && !message!.isEmpty{
             labelSpace.constant = 8
@@ -235,13 +213,12 @@ public class ChrysanView: UIView {
         activityView.isHidden = true
         progressView.isHidden = true
         iconView.isHidden = true
-
+        
         switch status {
         case .plain:
             messageToTop.constant = 16
         case .running:
-            activityView.isHidden = false
-            activityView.activityIndicatorViewStyle = chrysanStyle
+            setupActivityViewForRunning()
         case .progress:
             progressView.isHidden = false
             progressView.setProgress(progress, text: progressText)
@@ -258,6 +235,21 @@ public class ChrysanView: UIView {
         
         layoutIfNeeded()
         showHUD()
+    }
+    
+    private func setupActivityViewForRunning() {
+        if let activityStyle = config.chrysanStyle.activityStyle {
+            activityView.isHidden = false
+            activityView.activityIndicatorViewStyle = activityStyle
+        } else if case let .animationImages(images) = config.chrysanStyle {
+            activityView.isHidden = true
+            iconView.isHidden = false
+            iconView.animationImages = images
+            iconView.animationDuration = Double(images.count) * config.frameDuration
+            iconView.startAnimating()
+        } else {
+            // do nothing
+        }
     }
     
     private func updateMessageTextAlignment() {
@@ -281,12 +273,32 @@ public class ChrysanView: UIView {
         isShown = true
         isHidden = false
         alpha = 0
-        
         parent.bringSubview(toFront: self)
         parent.layoutIfNeeded()
         layer.removeAllAnimations()
+
+        UIView.animate(withDuration: 0.15) {
+            self.alpha = 1
+        }
+    }
+    
+    private func hideHUD() {
+        if !isShown {
+            return
+        }
         
-        self.alpha = 1
+        isShown = false
+        
+        layer.removeAllAnimations()
+        
+        UIView.animate(withDuration: 0.15, animations: {
+            self.alpha = 0
+        }) { (finished) in
+            if finished {
+                self.isHidden = true
+                self.reset()
+            }
+        }
     }
     
     private func reset() {
@@ -295,6 +307,8 @@ public class ChrysanView: UIView {
         message = nil
         progress = 0
         progressView.setProgress(0)
+        iconView.animationImages = nil
+        iconView.stopAnimating()
     }
     
     /*

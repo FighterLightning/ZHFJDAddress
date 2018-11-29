@@ -8,13 +8,14 @@
 //这是一个自定义仿京东地址选择器。Swift版本，（保证集成成功，有不懂的地方可加QQ：991150443 进行讨论。）
 //OC版本地址：https://github.com/FighterLightning/ZHFJDAddressOC.git
 /*该demo的使用须知:
- 1.下载该demo。把ProvinceModel.swift（必须），ZHFAddTitleAddressView.swift(必须) NetworkTools.swift(可用自己封装的)拖进项目
+ 1.下载该demo。把ProvinceModel.swift（必须），ZHFAddTitleAddressView.swift(必须) 拖进项目
  2.pod 'Chrysan', :git => 'https://github.com/Harley-xk/Chrysan.git' //第三方加载框（根据需求进行添加）
- pod 'AFNetworking'//网络请求
- pod 'YYModel' //字典转模型
+ pod 'Alamofire'//网络请求
+ pod 'ObjectMapper' //字典转模型
  3.把以下代码添加进自己的控制器方可使用，网络请求看ZHFAddTitleAddressView.swift头部注释根据需求进行修改
  4.如果感觉有帮助，不要吝啬你的星星哦！
-  该demo地址：https://github.com/FighterLightning/ZHFJDAddress.git
+ 该demo地址：https://github.com/FighterLightning/ZHFJDAddress.git
+ 简书地址：https://www.jianshu.com/p/0269071219af
  */
 /*
  这个视图你需要修改的地方为：
@@ -26,7 +27,9 @@
 
 import UIKit
 import Chrysan
-import YYModel
+import ObjectMapper
+import Alamofire
+
 let ScreenHeight = UIScreen.main.bounds.size.height
 let ScreenWidth = UIScreen.main.bounds.size.width
 protocol ZHFAddTitleAddressViewDelegate {
@@ -58,6 +61,7 @@ let AddressAdministerCellIdentifier  = "AddressAdministerCellIdentifier"
     
     //初始化这个地址视图
     func initAddressView() -> UIView {
+        
         //初始化本地数据（如果是网络请求请注释掉-----
         let imagePath: String = Bundle.main.path(forResource: "location", ofType: "txt")!
         var string : String = String()
@@ -417,11 +421,12 @@ extension ZHFAddTitleAddressView {
             for dic: NSDictionary in resultArr{
                 if (dic["parentid"] as! String == "0"){
                     let dic1: [String : Any] = [
-                        "id":dic["id"]!,
+                        //记得把字符串类型转换成Int类型，否则用ObjectMapper转模型是id会出错
+                        "id":(dic["id"] as! NSString).intValue,
                         "province_name":dic["name"]!
                     ];
                     let provinceModel:ProvinceModel  =
-                        ProvinceModel.yy_model(with: dic1)!
+                        ProvinceModel(JSON: dic1)!
                     self.provinceMarr.add(provinceModel)
                 }
             }
@@ -435,10 +440,11 @@ extension ZHFAddTitleAddressView {
         for dic: NSDictionary in resultArr {
              if (dic["parentid"] as! String == "\(selectedID)") {
                 let dic1: [String : Any] = [
-                    "id":dic["id"]!,
+                    //记得把字符串类型转换成Int类型，否则用ObjectMapper转模型是id会出错
+                    "id":(dic["id"] as! NSString).intValue,
                     "city_name":dic["name"]!];
                 let cityModel:CityModel  =
-                    CityModel.yy_model(with: dic1)!
+                    CityModel(JSON: dic1)!
                 self.cityMarr.add(cityModel)
             }
         }
@@ -461,10 +467,11 @@ extension ZHFAddTitleAddressView {
         for dic: NSDictionary in resultArr {
             if (dic["parentid"] as! String == "\(selectedID)") {
                 let dic1: [String : Any] = [
-                    "id":dic["id"]!,
+                    //记得把字符串类型转换成Int类型，否则用ObjectMapper转模型是id会出错
+                    "id":(dic["id"] as! NSString).intValue,
                     "county_name":dic["name"]!];
                 let countyModel:CountyModel  =
-                    CountyModel.yy_model(with: dic1)!
+                     CountyModel(JSON: dic1)!
                 self.countyMarr.add(countyModel)
             }
         }
@@ -487,10 +494,11 @@ extension ZHFAddTitleAddressView {
         for dic: NSDictionary in resultArr {
             if (dic["parentid"] as! String == "\(selectedID)") {
                 let dic1: [String : Any] = [
-                    "id":dic["id"]!,
+                    //记得把字符串类型转换成Int类型，否则用ObjectMapper转模型是id会出错
+                    "id":(dic["id"] as! NSString).intValue,
                     "town_name":dic["name"]!];
                 let townModel:TownModel  =
-                    TownModel.yy_model(with: dic1)!
+                     TownModel(JSON: dic1)!
                 self.townMarr.add(townModel)
             }
         }
@@ -511,95 +519,95 @@ extension ZHFAddTitleAddressView {
 // 以下是网络请求方法
 //extension ZHFAddTitleAddressView{
 //
-    //    func getAddressMessageData(addressID: NSInteger, provinceIdOrCityId: NSInteger) {
-    //        var addressUrl =  String()
-    //        var parameters : NSDictionary =  NSDictionary()
-    //        switch addressID {
-    //        case 1:
-    //            //获取省份的URL
-    //            addressUrl = "getProvinceAddressUrl"
-    //            //请求省份需要传递的参数
-    //            parameters = ["user_id" : userID]
-    //        case 2:
-    //            //获取市区的URL
-    //            addressUrl = "getCityAddressUrl"
-    //            //请求市区需要传递的参数
-    //            parameters = ["province_id" : "5",
-    //            "user_id" : userID]
-    //        case 3:
-    //            //获取县的URL
-    //            addressUrl = "getCountyAddressUrl"
-    //            //请求县需要传递的参数
-    //            parameters = ["city_id" : "4",
-    //                          "user_id" : userID]
-    //        case 4:
-    //            //获取乡镇的URL
-    //            addressUrl = "getTownAddressUrl"
-    //            //请求县需要传递的参数
-    //            parameters = ["county_id" : "3",
-    //                          "user_id" : userID]
-    //        default:
-    //            break;
-    //        }
-    //        //第三方加载工具
-    //        self.addAddressView.chrysan.show()
-    //        //网络请求
-    //        NetworkTools.shareInstance.request(methodType: .POST, urlString:addressUrl, parameters: parameters as! [String : AnyObject]) { (result, error) in
-    //            self.addAddressView.chrysan.hide()
-    //            if result != nil
-    //            {
-    //                let dic = result as! NSDictionary
-    //                let code : NSInteger = dic["code"] as! NSInteger
-    //                if code == 200{
-    //                    switch addressID {
-    //                    case 1:
-    //                        //拿到省列表
-    //                       let  provinceArr: NSArray = dic["data"] as! NSArray
-    //                       self.case1(provinceArr: provinceArr)
-   //                        break;
-    //                    case 2:
-    //                        //拿到市列表
-    //                        let  cityArr: NSArray = dic["data"] as! NSArray
-    //                        self.case2(cityArr: cityArr)
-    //                        break;
-    //                    case 3:
-    //                        //拿到县列表
-    //                        let  countyArr: NSArray = dic["data"] as! NSArray
-    //                        self.case3(countyArr: countyArr)
-   //                        break;
-    //                    case 4:
-    //                        //拿到乡镇列表
+//        func getAddressMessageData(addressID: NSInteger, provinceIdOrCityId: NSInteger) {
+//            var addressUrl =  String()
+//            var parameters : NSDictionary =  NSDictionary()
+//            switch addressID {
+//            case 1:
+//                //获取省份的URL
+//                addressUrl = "getProvinceAddressUrl"
+//                //请求省份需要传递的参数
+//                parameters = ["user_id" : userID]
+//            case 2:
+//                //获取市区的URL
+//                addressUrl = "getCityAddressUrl"
+//                //请求市区需要传递的参数
+//                parameters = ["province_id" : "5",
+//                "user_id" : userID]
+//            case 3:
+//                //获取县的URL
+//                addressUrl = "getCountyAddressUrl"
+//                //请求县需要传递的参数
+//                parameters = ["city_id" : "4",
+//                              "user_id" : userID]
+//            case 4:
+//                //获取乡镇的URL
+//                addressUrl = "getTownAddressUrl"
+//                //请求县需要传递的参数
+//                parameters = ["county_id" : "3",
+//                              "user_id" : userID]
+//            default:
+//                break;
+//            }
+//            //第三方加载工具
+//            self.addAddressView.chrysan.show()
+//            
+//            //网络请求/
+//            Alamofire.request(methodType: .post, urlString:addressUrl, parameters: parameters as! [String : AnyObject]) { (result, error) in
+//                self.addAddressView.chrysan.hide()
+//                if result != nil
+//                {
+//                    let dic = result as! NSDictionary
+//                    let code : NSInteger = dic["code"] as! NSInteger
+//                    if code == 200{
+//                        switch addressID {
+//                        case 1:
+//                            //拿到省列表
+//                           let  provinceArr: NSArray = dic["data"] as! NSArray
+//                           self.case1(provinceArr: provinceArr)
+//                           break;
+//                        case 2:
+//                            //拿到市列表
+//                            let  cityArr: NSArray = dic["data"] as! NSArray
+//                            self.case2(cityArr: cityArr)
+//                            break;
+//                        case 3:
+//                            //拿到县列表
+//                            let  countyArr: NSArray = dic["data"] as! NSArray
+//                            self.case3(countyArr: countyArr)
+//                           break;
+//                        case 4:
+//                            //拿到乡镇列表
 //                            let  townArr: NSArray = dic["data"] as! NSArray
 //                            self.case3(townArr: townArr)
-   //                        break;
-    //                    default:
-    //                        break;
-    //                    }
-    //                    if self.tableViewMarr.count >= addressID{
-    //                        let tableView1: UITableView  = self.tableViewMarr[addressID - 1] as! UITableView
-    //                        tableView1.reloadData()
-    //                    }
-    //                }
-    //                else{
-    //                   self.addAddressView.chrysan.showMessage(dic["msg"] as! String, hideDelay: 2.0)
-    //                }
-    //            }
-    //            else{
-    //                self.addAddressView.chrysan.showMessage(error as! String, hideDelay: 2.0)
-    //            }
-    //        }
-    //    }
-/*下面这个主要是逻辑分析和数据处理
- 只需要找到 ProvinceModel类，把其属性修改成你需要的即可
- 以下方法：对没有下一级的情况，进行了逻辑判断（建议不要随意更改。）
- */
+//                           break;
+//                        default:
+//                            break;
+//                        }
+//                        if self.tableViewMarr.count >= addressID{
+//                            let tableView1: UITableView  = self.tableViewMarr[addressID - 1] as! UITableView
+//                            tableView1.reloadData()
+//                        }
+//                    }
+//                    else{
+//                       self.addAddressView.chrysan.showMessage(dic["msg"] as! String, hideDelay: 2.0)
+//                    }
+//                }
+//                else{
+//                    self.addAddressView.chrysan.showMessage(error as! String, hideDelay: 2.0)
+//                }
+//            }
+//        }
+///*下面这个主要是逻辑分析和数据处理
+// 只需要找到 ProvinceModel类，把其属性修改成你需要的即可
+// 以下方法：对没有下一级的情况，进行了逻辑判断（建议不要随意更改。）
+// */
 //    func case1(provinceArr: NSArray ) {
 //        if provinceArr.count > 0{
 //            self.provinceMarr.removeAllObjects()
 //            for i in 0 ..< provinceArr.count{
 //                let dic1 : [String : Any] = provinceArr[i] as! [String : Any]
-//                let provinceModel:ProvinceModel  =
-//                    ProvinceModel.yy_model(with: dic1)!
+//                let provinceModel:ProvinceModel = ProvinceModel(JSON: dic1)!
 //                self.provinceMarr.add(provinceModel)
 //            }
 //        }
@@ -612,8 +620,7 @@ extension ZHFAddTitleAddressView {
 //            self.cityMarr.removeAllObjects()
 //            for i in 0 ..< cityArr.count{
 //                let dic1 : [String : Any] = cityArr[i] as! [String : Any]
-//                let cityModel:CityModel  =
-//                    CityModel.yy_model(with: dic1)!
+//                let cityModel:CityModel = CityModel(JSON: dic1)!
 //                self.cityMarr.add(cityModel)
 //            }
 //            if self.tableViewMarr.count >= 2{
@@ -634,8 +641,7 @@ extension ZHFAddTitleAddressView {
 //            self.countyMarr.removeAllObjects()
 //            for i in 0 ..< countyArr.count{
 //                let dic1 : [String : Any] = countyArr[i] as! [String : Any]
-//                let countyModel:CountyModel  =
-//                    CountyModel.yy_model(with: dic1)!
+//                let countyModel:CountyModel  = CountyModel(JSON: dic1)!
 //                self.countyMarr.add(countyModel)
 //            }
 //            if (self.tableViewMarr.count >= 3){
@@ -656,8 +662,7 @@ extension ZHFAddTitleAddressView {
 //        if townArr.count > 0{
 //        for i in 0 ..< townArr.count{
 //            let dic1 : [String : Any] = townArr[i] as! [String : Any]
-//            let townModel:TownModel  =
-//                TownModel.yy_model(with: dic1)!
+//            let townModel:TownModel  = TownModel(JSON: dic1)!
 //            self.townMarr.add(townModel)
 //        }
 //        if (self.tableViewMarr.count >= 4){

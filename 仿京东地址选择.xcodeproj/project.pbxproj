@@ -7,22 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1B98FBBD14CEB06E695AB5A1 /* Pods________.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DF393C8F5D5F48E2FA5036B /* Pods________.framework */; };
 		E32B77F11FDFC1A50095BE8C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E32B77F01FDFC1A50095BE8C /* AppDelegate.swift */; };
 		E32B77F31FDFC1A50095BE8C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E32B77F21FDFC1A50095BE8C /* ViewController.swift */; };
 		E32B77F61FDFC1A50095BE8C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E32B77F41FDFC1A50095BE8C /* Main.storyboard */; };
 		E32B77F81FDFC1A50095BE8C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E32B77F71FDFC1A50095BE8C /* Assets.xcassets */; };
 		E32B77FB1FDFC1A50095BE8C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E32B77F91FDFC1A50095BE8C /* LaunchScreen.storyboard */; };
 		E32B78031FDFC1BB0095BE8C /* ProvinceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E32B78021FDFC1BB0095BE8C /* ProvinceModel.swift */; };
-		E32B78091FDFC6B70095BE8C /* NetworkTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = E32B78081FDFC6B70095BE8C /* NetworkTools.swift */; };
 		E335568720D25AC000B1C5E7 /* ZHFAddTitleAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E335568520D25AC000B1C5E7 /* ZHFAddTitleAddressView.swift */; };
 		E335568820D25AC000B1C5E7 /* AddressCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E335568620D25AC000B1C5E7 /* AddressCell.swift */; };
 		E33EFD8720B567BF00E873A8 /* location.txt in Resources */ = {isa = PBXBuildFile; fileRef = E33EFD8620B567BF00E873A8 /* location.txt */; };
+		E3A6B03821AE9F8D00263099 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3A6B03721AE9F8D00263099 /* Alamofire.framework */; };
+		E3A6B03A21AE9F8D00263099 /* Chrysan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3A6B03921AE9F8D00263099 /* Chrysan.framework */; };
+		E3A6B03C21AE9F8D00263099 /* ObjectMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3A6B03B21AE9F8D00263099 /* ObjectMapper.framework */; };
+		E3A6B03E21AE9F8D00263099 /* Pods_仿京东地址选择.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3A6B03D21AE9F8D00263099 /* Pods_仿京东地址选择.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0754795859068F12B740F73D /* Pods-仿京东地址选择.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-仿京东地址选择.release.xcconfig"; path = "Pods/Target Support Files/Pods-仿京东地址选择/Pods-仿京东地址选择.release.xcconfig"; sourceTree = "<group>"; };
-		5DF393C8F5D5F48E2FA5036B /* Pods________.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = "Pods________.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDE2BDC43B73773BBF7D95FA /* Pods-仿京东地址选择.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-仿京东地址选择.debug.xcconfig"; path = "Pods/Target Support Files/Pods-仿京东地址选择/Pods-仿京东地址选择.debug.xcconfig"; sourceTree = "<group>"; };
 		E32B77ED1FDFC1A50095BE8C /* 仿京东地址选择.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "仿京东地址选择.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E32B77F01FDFC1A50095BE8C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -32,10 +33,13 @@
 		E32B77FA1FDFC1A50095BE8C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E32B77FC1FDFC1A50095BE8C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E32B78021FDFC1BB0095BE8C /* ProvinceModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProvinceModel.swift; sourceTree = "<group>"; };
-		E32B78081FDFC6B70095BE8C /* NetworkTools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkTools.swift; sourceTree = "<group>"; };
 		E335568520D25AC000B1C5E7 /* ZHFAddTitleAddressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZHFAddTitleAddressView.swift; sourceTree = "<group>"; };
 		E335568620D25AC000B1C5E7 /* AddressCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressCell.swift; sourceTree = "<group>"; };
 		E33EFD8620B567BF00E873A8 /* location.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = location.txt; sourceTree = "<group>"; };
+		E3A6B03721AE9F8D00263099 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E3A6B03921AE9F8D00263099 /* Chrysan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Chrysan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E3A6B03B21AE9F8D00263099 /* ObjectMapper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ObjectMapper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E3A6B03D21AE9F8D00263099 /* Pods_仿京东地址选择.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = "Pods_仿京东地址选择.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,7 +47,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1B98FBBD14CEB06E695AB5A1 /* Pods________.framework in Frameworks */,
+				E3A6B03821AE9F8D00263099 /* Alamofire.framework in Frameworks */,
+				E3A6B03A21AE9F8D00263099 /* Chrysan.framework in Frameworks */,
+				E3A6B03C21AE9F8D00263099 /* ObjectMapper.framework in Frameworks */,
+				E3A6B03E21AE9F8D00263099 /* Pods_仿京东地址选择.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -53,7 +60,10 @@
 		1F46B3CDFB96323D62A0476A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				5DF393C8F5D5F48E2FA5036B /* Pods________.framework */,
+				E3A6B03721AE9F8D00263099 /* Alamofire.framework */,
+				E3A6B03921AE9F8D00263099 /* Chrysan.framework */,
+				E3A6B03B21AE9F8D00263099 /* ObjectMapper.framework */,
+				E3A6B03D21AE9F8D00263099 /* Pods_仿京东地址选择.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -90,7 +100,6 @@
 			children = (
 				E33EFD8620B567BF00E873A8 /* location.txt */,
 				E32B78021FDFC1BB0095BE8C /* ProvinceModel.swift */,
-				E32B78081FDFC6B70095BE8C /* NetworkTools.swift */,
 				E335568620D25AC000B1C5E7 /* AddressCell.swift */,
 				E335568520D25AC000B1C5E7 /* ZHFAddTitleAddressView.swift */,
 				E32B77F01FDFC1A50095BE8C /* AppDelegate.swift */,
@@ -115,7 +124,6 @@
 				E32B77EA1FDFC1A50095BE8C /* Frameworks */,
 				E32B77EB1FDFC1A50095BE8C /* Resources */,
 				5E2094BE144721E9BA4EA26B /* [CP] Embed Pods Frameworks */,
-				7AFA42C1266B7154A5E873E7 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -181,13 +189,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-仿京东地址选择-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		5E2094BE144721E9BA4EA26B /* [CP] Embed Pods Frameworks */ = {
@@ -196,28 +207,20 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-仿京东地址选择/Pods-仿京东地址选择-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/Chrysan/Chrysan.framework",
+				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Chrysan.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjectMapper.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-仿京东地址选择/Pods-仿京东地址选择-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		7AFA42C1266B7154A5E873E7 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-仿京东地址选择/Pods-仿京东地址选择-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -228,7 +231,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E32B78031FDFC1BB0095BE8C /* ProvinceModel.swift in Sources */,
-				E32B78091FDFC6B70095BE8C /* NetworkTools.swift in Sources */,
 				E335568720D25AC000B1C5E7 /* ZHFAddTitleAddressView.swift in Sources */,
 				E32B77F31FDFC1A50095BE8C /* ViewController.swift in Sources */,
 				E335568820D25AC000B1C5E7 /* AddressCell.swift in Sources */,
