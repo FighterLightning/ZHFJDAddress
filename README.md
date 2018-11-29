@@ -14,7 +14,7 @@ https://github.com/FighterLightning/ZHFJDAddressOC.git
 
 
 #### Demo的使用须知:
- 1. 下载该demo。把ProvinceModel.swift（必须），ZHFAddTitleAddressView.swift(必须) AddressCell.swift(必须)  NetworkTools.swift(可用自己封装的)拖进项目
+ 1. 下载该demo。把ProvinceModel.swift（必须），ZHFAddTitleAddressView.swift(必须) AddressCell.swift(必须) 拖进项目
 
  2. 在 Podfile 中添加:
  * `pod 'Alamofire'`//网络请求
