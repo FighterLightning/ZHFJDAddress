@@ -16,10 +16,13 @@
 		E335568720D25AC000B1C5E7 /* ZHFAddTitleAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E335568520D25AC000B1C5E7 /* ZHFAddTitleAddressView.swift */; };
 		E335568820D25AC000B1C5E7 /* AddressCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E335568620D25AC000B1C5E7 /* AddressCell.swift */; };
 		E33EFD8720B567BF00E873A8 /* location.txt in Resources */ = {isa = PBXBuildFile; fileRef = E33EFD8620B567BF00E873A8 /* location.txt */; };
-		E3A6B03821AE9F8D00263099 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3A6B03721AE9F8D00263099 /* Alamofire.framework */; };
-		E3A6B03A21AE9F8D00263099 /* Chrysan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3A6B03921AE9F8D00263099 /* Chrysan.framework */; };
-		E3A6B03C21AE9F8D00263099 /* ObjectMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3A6B03B21AE9F8D00263099 /* ObjectMapper.framework */; };
-		E3A6B03E21AE9F8D00263099 /* Pods_仿京东地址选择.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3A6B03D21AE9F8D00263099 /* Pods_仿京东地址选择.framework */; };
+		E367165F21B5249F00815F17 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E367165E21B5249F00815F17 /* Alamofire.framework */; };
+		E367166121B5249F00815F17 /* Chrysan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E367166021B5249F00815F17 /* Chrysan.framework */; };
+		E367166321B5249F00815F17 /* Moya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E367166221B5249F00815F17 /* Moya.framework */; };
+		E367166521B5249F00815F17 /* ObjectMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E367166421B5249F00815F17 /* ObjectMapper.framework */; };
+		E367166721B5249F00815F17 /* Pods_仿京东地址选择.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E367166621B5249F00815F17 /* Pods_仿京东地址选择.framework */; };
+		E367166921B5249F00815F17 /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E367166821B5249F00815F17 /* Result.framework */; };
+		E397321021B13ADE00FA29DF /* NetworkTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = E397320F21B13ADE00FA29DF /* NetworkTools.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,10 +39,13 @@
 		E335568520D25AC000B1C5E7 /* ZHFAddTitleAddressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZHFAddTitleAddressView.swift; sourceTree = "<group>"; };
 		E335568620D25AC000B1C5E7 /* AddressCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressCell.swift; sourceTree = "<group>"; };
 		E33EFD8620B567BF00E873A8 /* location.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = location.txt; sourceTree = "<group>"; };
-		E3A6B03721AE9F8D00263099 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		E3A6B03921AE9F8D00263099 /* Chrysan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Chrysan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		E3A6B03B21AE9F8D00263099 /* ObjectMapper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ObjectMapper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		E3A6B03D21AE9F8D00263099 /* Pods_仿京东地址选择.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = "Pods_仿京东地址选择.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E367165E21B5249F00815F17 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E367166021B5249F00815F17 /* Chrysan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Chrysan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E367166221B5249F00815F17 /* Moya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Moya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E367166421B5249F00815F17 /* ObjectMapper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ObjectMapper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E367166621B5249F00815F17 /* Pods_仿京东地址选择.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = "Pods_仿京东地址选择.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E367166821B5249F00815F17 /* Result.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Result.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E397320F21B13ADE00FA29DF /* NetworkTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkTools.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,10 +53,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E3A6B03821AE9F8D00263099 /* Alamofire.framework in Frameworks */,
-				E3A6B03A21AE9F8D00263099 /* Chrysan.framework in Frameworks */,
-				E3A6B03C21AE9F8D00263099 /* ObjectMapper.framework in Frameworks */,
-				E3A6B03E21AE9F8D00263099 /* Pods_仿京东地址选择.framework in Frameworks */,
+				E367165F21B5249F00815F17 /* Alamofire.framework in Frameworks */,
+				E367166121B5249F00815F17 /* Chrysan.framework in Frameworks */,
+				E367166321B5249F00815F17 /* Moya.framework in Frameworks */,
+				E367166521B5249F00815F17 /* ObjectMapper.framework in Frameworks */,
+				E367166721B5249F00815F17 /* Pods_仿京东地址选择.framework in Frameworks */,
+				E367166921B5249F00815F17 /* Result.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -60,10 +68,12 @@
 		1F46B3CDFB96323D62A0476A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				E3A6B03721AE9F8D00263099 /* Alamofire.framework */,
-				E3A6B03921AE9F8D00263099 /* Chrysan.framework */,
-				E3A6B03B21AE9F8D00263099 /* ObjectMapper.framework */,
-				E3A6B03D21AE9F8D00263099 /* Pods_仿京东地址选择.framework */,
+				E367165E21B5249F00815F17 /* Alamofire.framework */,
+				E367166021B5249F00815F17 /* Chrysan.framework */,
+				E367166221B5249F00815F17 /* Moya.framework */,
+				E367166421B5249F00815F17 /* ObjectMapper.framework */,
+				E367166621B5249F00815F17 /* Pods_仿京东地址选择.framework */,
+				E367166821B5249F00815F17 /* Result.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -100,6 +110,7 @@
 			children = (
 				E33EFD8620B567BF00E873A8 /* location.txt */,
 				E32B78021FDFC1BB0095BE8C /* ProvinceModel.swift */,
+				E397320F21B13ADE00FA29DF /* NetworkTools.swift */,
 				E335568620D25AC000B1C5E7 /* AddressCell.swift */,
 				E335568520D25AC000B1C5E7 /* ZHFAddTitleAddressView.swift */,
 				E32B77F01FDFC1A50095BE8C /* AppDelegate.swift */,
@@ -210,13 +221,17 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-仿京东地址选择/Pods-仿京东地址选择-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/Chrysan/Chrysan.framework",
+				"${BUILT_PRODUCTS_DIR}/Moya/Moya.framework",
 				"${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework",
+				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Chrysan.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Moya.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjectMapper.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -232,6 +247,7 @@
 			files = (
 				E32B78031FDFC1BB0095BE8C /* ProvinceModel.swift in Sources */,
 				E335568720D25AC000B1C5E7 /* ZHFAddTitleAddressView.swift in Sources */,
+				E397321021B13ADE00FA29DF /* NetworkTools.swift in Sources */,
 				E32B77F31FDFC1A50095BE8C /* ViewController.swift in Sources */,
 				E335568820D25AC000B1C5E7 /* AddressCell.swift in Sources */,
 				E32B77F11FDFC1A50095BE8C /* AppDelegate.swift in Sources */,
@@ -374,6 +390,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = N82XM546LU;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = "仿京东地址选择/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -391,6 +411,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = N82XM546LU;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = "仿京东地址选择/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

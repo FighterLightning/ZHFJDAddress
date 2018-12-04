@@ -4,7 +4,7 @@
   # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
   use_frameworks!
 pod 'Chrysan', :git => 'https://github.com/Harley-xk/Chrysan.git'
-pod 'Alamofire'
+pod 'Moya'
 pod 'ObjectMapper'
 end
 

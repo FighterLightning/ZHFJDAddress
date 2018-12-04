@@ -26,17 +26,17 @@
  */
 
 import UIKit
-import Chrysan
 import ObjectMapper
-import Alamofire
-
+import Chrysan
+import Moya
 let ScreenHeight = UIScreen.main.bounds.size.height
 let ScreenWidth = UIScreen.main.bounds.size.width
 protocol ZHFAddTitleAddressViewDelegate {
     func cancelBtnClick( titleAddress: String,titleID: String)
 }
 class ZHFAddTitleAddressView: UIView {
-let AddressAdministerCellIdentifier  = "AddressAdministerCellIdentifier"
+    
+  let AddressAdministerCellIdentifier  = "AddressAdministerCellIdentifier"
   var delegate: ZHFAddTitleAddressViewDelegate?
   var userID :NSInteger = 0
   var defaultHeight: CGFloat = 200
@@ -57,11 +57,9 @@ let AddressAdministerCellIdentifier  = "AddressAdministerCellIdentifier"
   var tableViewMarr : NSMutableArray = NSMutableArray()
   var resultArr: [NSDictionary] = [NSDictionary]()//本地数组
   lazy var titleBtns : NSMutableArray = NSMutableArray()
-  var PCCTID: NSInteger = -1
-    
+  var PCCTID: NSInteger = 0
     //初始化这个地址视图
     func initAddressView() -> UIView {
-        
         //初始化本地数据（如果是网络请求请注释掉-----
         let imagePath: String = Bundle.main.path(forResource: "location", ofType: "txt")!
         var string : String = String()
@@ -513,15 +511,16 @@ extension ZHFAddTitleAddressView {
         }
         else{//没有对应的乡镇
             self.removeTitleAndTableViewCancel(index: 3)
-}}
+          }
+
+    }
 }
 //网络请求*****你只需要修改这个方法里的内容就可使用
 // 以下是网络请求方法
 //extension ZHFAddTitleAddressView{
-//
 //        func getAddressMessageData(addressID: NSInteger, provinceIdOrCityId: NSInteger) {
 //            var addressUrl =  String()
-//            var parameters : NSDictionary =  NSDictionary()
+//            var parameters : [String : Any] =  [String : Any]()
 //            switch addressID {
 //            case 1:
 //                //获取省份的URL
@@ -551,9 +550,8 @@ extension ZHFAddTitleAddressView {
 //            }
 //            //第三方加载工具
 //            self.addAddressView.chrysan.show()
-//            
 //            //网络请求/
-//            Alamofire.request(methodType: .post, urlString:addressUrl, parameters: parameters as! [String : AnyObject]) { (result, error) in
+//            ZHFNetwork.request(target: .HaveParameters(pathStr: addressUrl, parameters: parameters), success: { (result) in
 //                self.addAddressView.chrysan.hide()
 //                if result != nil
 //                {
@@ -563,9 +561,9 @@ extension ZHFAddTitleAddressView {
 //                        switch addressID {
 //                        case 1:
 //                            //拿到省列表
-//                           let  provinceArr: NSArray = dic["data"] as! NSArray
-//                           self.case1(provinceArr: provinceArr)
-//                           break;
+//                            let  provinceArr: NSArray = dic["data"] as! NSArray
+//                            self.case1(provinceArr: provinceArr)
+//                            break;
 //                        case 2:
 //                            //拿到市列表
 //                            let  cityArr: NSArray = dic["data"] as! NSArray
@@ -575,12 +573,12 @@ extension ZHFAddTitleAddressView {
 //                            //拿到县列表
 //                            let  countyArr: NSArray = dic["data"] as! NSArray
 //                            self.case3(countyArr: countyArr)
-//                           break;
+//                            break;
 //                        case 4:
 //                            //拿到乡镇列表
 //                            let  townArr: NSArray = dic["data"] as! NSArray
-//                            self.case3(townArr: townArr)
-//                           break;
+//                            self.case4(townArr: townArr)
+//                            break;
 //                        default:
 //                            break;
 //                        }
@@ -590,14 +588,17 @@ extension ZHFAddTitleAddressView {
 //                        }
 //                    }
 //                    else{
-//                       self.addAddressView.chrysan.showMessage(dic["msg"] as! String, hideDelay: 2.0)
+//                        self.addAddressView.chrysan.showMessage(dic["msg"] as! String, hideDelay: 2.0)
 //                    }
 //                }
-//                else{
-//                    self.addAddressView.chrysan.showMessage(error as! String, hideDelay: 2.0)
-//                }
+//            },  error1: { (statusCode) in
+//                //服务器报错等问题 (常见问题404 ，地址错误)
+//                self.addAddressView.chrysan.showPlainMessage("请求错误！错误码：\(statusCode)", hideDelay: 2)
+//            }) { (error) in
+//                //没有网络等问题 （网络超时，没有网，地址错误）
+//                self.addAddressView.chrysan.showPlainMessage("请求失败！错误信息：\(error.errorDescription!)", hideDelay: 2)
 //            }
-//        }
+//    }
 ///*下面这个主要是逻辑分析和数据处理
 // 只需要找到 ProvinceModel类，把其属性修改成你需要的即可
 // 以下方法：对没有下一级的情况，进行了逻辑判断（建议不要随意更改。）
