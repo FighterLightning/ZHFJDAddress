@@ -26,12 +26,19 @@ class ViewController: UIViewController,ZHFAddTitleAddressViewDelegate {
         setUI()
         
     }
+    //如果是网络请求修改地址，在需要修改的地址的titleIDMarr赋值后设置这一块UI
     func setUI()  {
         //这是用户的ID
         addTitleAddressView.title = "选择地址"
         addTitleAddressView.userID = 7
         addTitleAddressView.delegate = self
         addTitleAddressView.defaultHeight = 350
+        if addTitleAddressView.titleIDMarr.count > 0 {
+            addTitleAddressView.isChangeAddress = true
+        }
+        else{
+            addTitleAddressView.isChangeAddress = false
+        }
         self.view.addSubview(addTitleAddressView.initAddressView())
         
     }

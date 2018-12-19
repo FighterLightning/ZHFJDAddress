@@ -48,16 +48,18 @@ class ZHFAddTitleAddressView: UIView {
   lazy var countyMarr:NSMutableArray = NSMutableArray() //县
   lazy var townMarr:NSMutableArray = NSMutableArray() //乡镇
   var titleScrollView :UIScrollView = UIScrollView()
-  var contentScrollView :UIScrollView = UIScrollView()
-  var radioBtn :UIButton = UIButton()
-  var lineLabel :UILabel = UILabel()
-  let titleScrollViewH :CGFloat = 37
-  var titleMarr : NSMutableArray = NSMutableArray()
-  lazy  var titleIDMarr : NSMutableArray = NSMutableArray()
-  var tableViewMarr : NSMutableArray = NSMutableArray()
-  var resultArr: [NSDictionary] = [NSDictionary]()//本地数组
-  lazy var titleBtns : NSMutableArray = NSMutableArray()
-  var PCCTID: NSInteger = 0
+    var contentScrollView :UIScrollView = UIScrollView()
+    var radioBtn :UIButton = UIButton()
+    var lineLabel :UILabel = UILabel()
+    let titleScrollViewH :CGFloat = 37
+    var titleMarr : NSMutableArray = NSMutableArray()
+    lazy  var titleIDMarr : NSMutableArray = NSMutableArray()
+    var tableViewMarr : NSMutableArray = NSMutableArray()
+    var resultArr: [NSDictionary] = [NSDictionary]()//本地数组
+    lazy var titleBtns : NSMutableArray = NSMutableArray()
+    var PCCTID: NSInteger = 0
+    var isChangeAddress :Bool = true //这个属性如果是新增地址的时候设置成false
+    var scroolToRow = 0 //确定在更改地址的时候能滚到对应的位置请求到下一级
     //初始化这个地址视图
     func initAddressView() -> UIView {
         //初始化本地数据（如果是网络请求请注释掉-----
@@ -282,6 +284,10 @@ extension ZHFAddTitleAddressView:UITableViewDelegate,UITableViewDataSource{
             let  pcctId :NSInteger = titleIDMarr[tableView.tag] as! NSInteger
             if self.PCCTID == pcctId{
               cell.isChangeRed = true
+                if isChangeAddress == true
+                {
+                    self.tableView(tableView, didSelectRowAt: NSIndexPath.init(row: indexPath.row, section: 0) as IndexPath)
+                }
             }
             else{
                 cell.isChangeRed = false
@@ -291,9 +297,11 @@ extension ZHFAddTitleAddressView:UITableViewDelegate,UITableViewDataSource{
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //先刷新当前选中的tableView
-        let tableView: UITableView  = self.tableViewMarr[tableView.tag] as! UITableView
-        tableView.reloadData()
+        if isChangeAddress == false {
+            //先刷新当前选中的tableView
+            let tableView: UITableView  = self.tableViewMarr[tableView.tag] as! UITableView
+            tableView.reloadData()
+        }
         if tableView.tag == 0 || tableView.tag == 1 || tableView.tag == 2 {
             if tableView.tag == 0{
                 let provinceModel: ProvinceModel = self.provinceMarr[indexPath.row] as! ProvinceModel
@@ -347,7 +355,12 @@ extension ZHFAddTitleAddressView:UITableViewDelegate,UITableViewDataSource{
                 self.titleIDMarr.add(townModel.id)
             }
             setupAllTitle(selectId: tableView.tag)
-            self.tapBtnAndcancelBtnClick()
+            if isChangeAddress == false{
+                self.tapBtnAndcancelBtnClick()
+            }
+            else{
+                isChangeAddress = false
+            }
         }
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -374,14 +387,18 @@ extension ZHFAddTitleAddressView:UITableViewDelegate,UITableViewDataSource{
     }
     //移除多余的title和tableView,收回选择器
     func removeTitleAndTableViewCancel(index:NSInteger){
-        let indexAddOne:NSInteger = index + 1
         let indexsubOne:NSInteger = index - 1
-        if (self.tableViewMarr.count >= indexAddOne){
-            self.titleMarr.removeObjects(in: NSRange.init(location: index, length: self.titleMarr.count - indexAddOne))
-            self.tableViewMarr.removeObjects(in: NSRange.init(location: index, length: self.titleMarr.count - indexAddOne))
+        if (self.tableViewMarr.count >= index){
+            self.titleMarr.removeObjects(in: NSRange.init(location: index, length: self.titleMarr.count - index))
+            self.tableViewMarr.removeObjects(in: NSRange.init(location: index, length: self.tableViewMarr.count - index))
         }
         self.setupAllTitle(selectId: indexsubOne)
-        self.tapBtnAndcancelBtnClick()
+        if isChangeAddress == false{
+            self.tapBtnAndcancelBtnClick()
+        }
+        else{
+            isChangeAddress = false
+        }
     }
 }
 //防止手势冲突
@@ -411,12 +428,16 @@ extension ZHFAddTitleAddressView {
         if self.tableViewMarr.count >= addressID{
             let tableView1: UITableView  = self.tableViewMarr[addressID - 1] as! UITableView
             tableView1.reloadData()
+            if self.isChangeAddress == true{
+                tableView1.scrollToRow(at: NSIndexPath.init(row: self.scroolToRow, section: 0) as IndexPath, at: UITableViewScrollPosition.bottom, animated: false)
+            }
         }
     }
     func case1() {
         self.provinceMarr.removeAllObjects()
         if resultArr.count > 0 {
-            for dic: NSDictionary in resultArr{
+            for i in 0 ..< resultArr.count{
+                let dic : NSDictionary = resultArr[i]
                 if (dic["parentid"] as! String == "0"){
                     let dic1: [String : Any] = [
                         //记得把字符串类型转换成Int类型，否则用ObjectMapper转模型是id会出错
@@ -425,17 +446,29 @@ extension ZHFAddTitleAddressView {
                     ];
                     let provinceModel:ProvinceModel  =
                         ProvinceModel(JSON: dic1)!
+                    if self.titleIDMarr.count > 0{
+                        let provinceID = self.titleIDMarr[0] as! NSInteger
+                        if provinceModel.id == provinceID{
+                            self.scroolToRow = i
+                        }
+                    }
                     self.provinceMarr.add(provinceModel)
                 }
             }
         }
         else{
-            self.tapBtnAndcancelBtnClick()
+            if isChangeAddress == false{
+                self.tapBtnAndcancelBtnClick()
+            }
+            else{
+                isChangeAddress = false
+            }
         }
     }
     func case2(selectedID: NSInteger) {
         self.cityMarr.removeAllObjects()
-        for dic: NSDictionary in resultArr {
+        for i in 0 ..< resultArr.count{
+            let dic : NSDictionary = resultArr[i]
              if (dic["parentid"] as! String == "\(selectedID)") {
                 let dic1: [String : Any] = [
                     //记得把字符串类型转换成Int类型，否则用ObjectMapper转模型是id会出错
@@ -443,16 +476,23 @@ extension ZHFAddTitleAddressView {
                     "city_name":dic["name"]!];
                 let cityModel:CityModel  =
                     CityModel(JSON: dic1)!
+                if self.titleIDMarr.count > 1{
+                    let cityID = self.titleIDMarr[1] as! NSInteger
+                    if cityModel.id == cityID{
+                        self.scroolToRow = i
+                    }
+                }
                 self.cityMarr.add(cityModel)
             }
         }
-        if (self.tableViewMarr.count >= 2){
-            self.changeTitle(replaceTitleMarrIndex: 1)
-        }
-        else{
-            self.addTableViewAndTitle(tableViewTag: 1)
-        }
+
         if (self.cityMarr.count > 0) {
+            if (self.tableViewMarr.count >= 2){
+                self.changeTitle(replaceTitleMarrIndex: 1)
+            }
+            else{
+                self.addTableViewAndTitle(tableViewTag: 1)
+            }
             self.setupAllTitle(selectId: 1)
         }
         else{
@@ -462,7 +502,8 @@ extension ZHFAddTitleAddressView {
     }
     func case3(selectedID: NSInteger) {
         self.countyMarr.removeAllObjects()
-        for dic: NSDictionary in resultArr {
+        for i in 0 ..< resultArr.count{
+            let dic : NSDictionary = resultArr[i]
             if (dic["parentid"] as! String == "\(selectedID)") {
                 let dic1: [String : Any] = [
                     //记得把字符串类型转换成Int类型，否则用ObjectMapper转模型是id会出错
@@ -470,16 +511,22 @@ extension ZHFAddTitleAddressView {
                     "county_name":dic["name"]!];
                 let countyModel:CountyModel  =
                      CountyModel(JSON: dic1)!
+                if self.titleIDMarr.count > 2{
+                    let countyID = self.titleIDMarr[2] as! NSInteger
+                    if countyModel.id == countyID{
+                        self.scroolToRow = i
+                    }
+                }
                 self.countyMarr.add(countyModel)
             }
         }
-        if (self.tableViewMarr.count >= 3){
-             self.changeTitle(replaceTitleMarrIndex: 2)
-        }
-        else{
-           self.addTableViewAndTitle(tableViewTag: 2)
-        }
         if (self.countyMarr.count > 0) {
+            if (self.tableViewMarr.count >= 3){
+                self.changeTitle(replaceTitleMarrIndex: 2)
+            }
+            else{
+                self.addTableViewAndTitle(tableViewTag: 2)
+            }
             self.setupAllTitle(selectId: 2)
         }
         else{
@@ -489,7 +536,8 @@ extension ZHFAddTitleAddressView {
     }
     func case4(selectedID: NSInteger) {
         self.townMarr.removeAllObjects()
-        for dic: NSDictionary in resultArr {
+        for i in 0 ..< resultArr.count{
+            let dic : NSDictionary = resultArr[i]
             if (dic["parentid"] as! String == "\(selectedID)") {
                 let dic1: [String : Any] = [
                     //记得把字符串类型转换成Int类型，否则用ObjectMapper转模型是id会出错
@@ -497,16 +545,22 @@ extension ZHFAddTitleAddressView {
                     "town_name":dic["name"]!];
                 let townModel:TownModel  =
                      TownModel(JSON: dic1)!
+                if self.titleIDMarr.count > 3{
+                    let townID = self.titleIDMarr[3] as! NSInteger
+                    if townModel.id == townID{
+                        self.scroolToRow = i
+                    }
+                }
                 self.townMarr.add(townModel)
             }
         }
-        if (self.tableViewMarr.count >= 4){
-            self.changeTitle(replaceTitleMarrIndex: 3)
-        }
-        else{
-            self.addTableViewAndTitle(tableViewTag: 3)
-        }
         if (self.townMarr.count > 0) {
+            if (self.tableViewMarr.count >= 4){
+                self.changeTitle(replaceTitleMarrIndex: 3)
+            }
+            else{
+                self.addTableViewAndTitle(tableViewTag: 3)
+            }
             self.setupAllTitle(selectId: 3)
         }
         else{//没有对应的乡镇
@@ -599,29 +653,48 @@ extension ZHFAddTitleAddressView {
 //                self.addAddressView.chrysan.showPlainMessage("请求失败！错误信息：\(error.errorDescription!)", hideDelay: 2)
 //            }
 //    }
-///*下面这个主要是逻辑分析和数据处理
-// 只需要找到 ProvinceModel类，把其属性修改成你需要的即可
-// 以下方法：对没有下一级的情况，进行了逻辑判断（建议不要随意更改。）
-// */
+/*下面这个主要是逻辑分析和数据处理
+ 只需要找到 ProvinceModel类，把其属性修改成你需要的即可
+ 以下方法：对没有下一级的情况，进行了逻辑判断（建议不要随意更改。）
+ */
 //    func case1(provinceArr: NSArray ) {
+//        self.provinceMarr.removeAllObjects()
 //        if provinceArr.count > 0{
 //            self.provinceMarr.removeAllObjects()
 //            for i in 0 ..< provinceArr.count{
 //                let dic1 : [String : Any] = provinceArr[i] as! [String : Any]
 //                let provinceModel:ProvinceModel = ProvinceModel(JSON: dic1)!
+//                if self.titleIDMarr.count > 0{
+//                    let provinceID = self.titleIDMarr[0] as! NSInteger
+//                    if provinceModel.id == provinceID{
+//                        self.scroolToRow = i
+//                    }
+//                }
 //                self.provinceMarr.add(provinceModel)
 //            }
 //        }
 //        else{
-//            self.tapBtnAndcancelBtnClick()
+//            if isChangeAddress == false{
+//                self.tapBtnAndcancelBtnClick()
+//            }
+//            else{
+//                isChangeAddress = false
+//            }
 //        }
 //    }
 //    func case2(cityArr: NSArray) {
+//          self.cityMarr.removeAllObjects()
 //        if cityArr.count > 0{
 //            self.cityMarr.removeAllObjects()
 //            for i in 0 ..< cityArr.count{
 //                let dic1 : [String : Any] = cityArr[i] as! [String : Any]
 //                let cityModel:CityModel = CityModel(JSON: dic1)!
+//                if self.titleIDMarr.count > 1{
+//                    let cityID = self.titleIDMarr[1] as! NSInteger
+//                    if cityModel.id == cityID{
+//                        self.scroolToRow = i
+//                    }
+//                }
 //                self.cityMarr.add(cityModel)
 //            }
 //            if self.tableViewMarr.count >= 2{
@@ -643,6 +716,12 @@ extension ZHFAddTitleAddressView {
 //            for i in 0 ..< countyArr.count{
 //                let dic1 : [String : Any] = countyArr[i] as! [String : Any]
 //                let countyModel:CountyModel  = CountyModel(JSON: dic1)!
+//                if self.titleIDMarr.count > 2{
+//                    let countyID = self.titleIDMarr[2] as! NSInteger
+//                    if countyModel.id == countyID{
+//                        self.scroolToRow = i
+//                    }
+//                }
 //                self.countyMarr.add(countyModel)
 //            }
 //            if (self.tableViewMarr.count >= 3){
@@ -664,6 +743,12 @@ extension ZHFAddTitleAddressView {
 //        for i in 0 ..< townArr.count{
 //            let dic1 : [String : Any] = townArr[i] as! [String : Any]
 //            let townModel:TownModel  = TownModel(JSON: dic1)!
+//            if self.titleIDMarr.count > 3{
+//                let townID = self.titleIDMarr[3] as! NSInteger
+//                if townModel.id == townID{
+//                    self.scroolToRow = i
+//                }
+//            }
 //            self.townMarr.add(townModel)
 //        }
 //        if (self.tableViewMarr.count >= 4){
