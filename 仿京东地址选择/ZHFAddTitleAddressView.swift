@@ -78,9 +78,6 @@ class ZHFAddTitleAddressView: UIView {
         self.frame = CGRect.init(x: 0, y: 0, width: ScreenWidth, height: ScreenHeight)
         self.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0.4)
         self.isHidden = true
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer.init(target: self, action: #selector(tapBtnAndcancelBtnClick))
-        tap.delegate = self
-        self.addGestureRecognizer(tap)
         //设置添加地址的View
         addAddressView.frame = CGRect.init(x: 0, y: ScreenHeight, width: ScreenWidth, height: defaultHeight)
         addAddressView.backgroundColor = UIColor.white
@@ -95,7 +92,7 @@ class ZHFAddTitleAddressView: UIView {
         cancelBtn.frame = CGRect.init(x:addAddressView.frame.maxX - 40, y: 10, width: 30, height: 30)
         cancelBtn.tag = 1
         cancelBtn.setImage(UIImage.init(named: "cancel"), for: UIControlState.normal)
-        cancelBtn.addTarget(self, action: #selector(tapBtnAndcancelBtnClick), for: UIControlEvents.touchUpInside)
+        cancelBtn.addTarget(self, action: #selector(cancelBtnClicked), for: UIControlEvents.touchUpInside)
         addAddressView.addSubview(cancelBtn)
         self.addTableViewAndTitle(tableViewTag: 0)
         //1.添加标题滚动视图
@@ -111,6 +108,14 @@ class ZHFAddTitleAddressView: UIView {
         UIView.animate(withDuration:0.2, animations: {
              self.addAddressView.frame.origin.y = ScreenHeight - self.defaultHeight
         }, completion: nil)
+    }
+    //取消按钮被点击
+    @objc func cancelBtnClicked(){
+        UIView.animate(withDuration:0.2, animations: {
+            self.addAddressView.frame.origin.y = ScreenHeight
+        }) { (_) in
+            self.isHidden = true
+        }
     }
     //收回的动画效果
     @objc func tapBtnAndcancelBtnClick() {
@@ -485,7 +490,6 @@ extension ZHFAddTitleAddressView {
                 self.cityMarr.add(cityModel)
             }
         }
-
         if (self.cityMarr.count > 0) {
             if (self.tableViewMarr.count >= 2){
                 self.changeTitle(replaceTitleMarrIndex: 1)

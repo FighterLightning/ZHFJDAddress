@@ -46,9 +46,14 @@ class ViewController: UIViewController,ZHFAddTitleAddressViewDelegate {
          addTitleAddressView.addAnimate()
     }
     func cancelBtnClick(titleAddress: String, titleID: String) {
-        addressBtn.setTitle(titleAddress, for: UIControlState.normal)
-        print("打印的对应省市县的id\(titleID)")
+        if titleID == "" {
+            addressBtn.setTitle("请选择", for:  UIControlState.normal)
         }
+        else{
+            addressBtn.setTitle(titleAddress, for: UIControlState.normal)
+            print("打印的对应省市县的id\(titleID)")
+        }
+    }
 }
 
 
