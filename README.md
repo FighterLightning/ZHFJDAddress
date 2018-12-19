@@ -9,7 +9,7 @@ https://github.com/FighterLightning/ZHFJDAddressOC.git
 
 
  
- ![](./仿京东地址选择/1.gif)
+ ![](./仿京东地址选择/1.gif)   
 
 
 
