@@ -14,10 +14,10 @@ https://github.com/FighterLightning/ZHFJDAddressOC.git
 
 
 #### Demo的使用须知:
- 1. 下载该demo。把ProvinceModel.swift（必须），ZHFAddTitleAddressView.swift(必须) AddressCell.swift(必须) 拖进项目
+ 1. 下载该demo。把ProvinceModel.swift（必须），ZHFAddTitleAddressView.swift(必须) AddressCell.swift(必须) NetworkTools.swift(网络请求类，本地数据不需要，对Moya做简单的处理可自写)拖进项目
 
  2. 在 Podfile 中添加:
- * `pod 'Alamofire'`//网络请求
+ * `pod 'Moya'`//网络请求
  
  * `pod 'ObjectMapper'`//字典转模型
 
