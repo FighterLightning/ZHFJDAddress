@@ -434,16 +434,21 @@ extension ZHFAddTitleAddressView {
             let tableView1: UITableView  = self.tableViewMarr[addressID - 1] as! UITableView
             tableView1.reloadData()
             if self.isChangeAddress == true{
-                tableView1.scrollToRow(at: NSIndexPath.init(row: self.scroolToRow, section: 0) as IndexPath, at: UITableViewScrollPosition.bottom, animated: false)
+                //保证列表刷新之后才进行滚动处理
+                DispatchQueue.main.async {
+                    tableView1.scrollToRow(at: NSIndexPath.init(row: self.scroolToRow, section: 0) as IndexPath, at: UITableViewScrollPosition.bottom, animated: false)
+                }
             }
         }
     }
     func case1() {
         self.provinceMarr.removeAllObjects()
+          var j = -1 //设置这个的主要原因是因为 resultArr 是包含省市区的数组
         if resultArr.count > 0 {
             for i in 0 ..< resultArr.count{
                 let dic : NSDictionary = resultArr[i]
                 if (dic["parentid"] as! String == "0"){
+                    j = j + 1
                     let dic1: [String : Any] = [
                         //记得把字符串类型转换成Int类型，否则用ObjectMapper转模型是id会出错
                         "id":(dic["id"] as! NSString).intValue,
@@ -454,7 +459,7 @@ extension ZHFAddTitleAddressView {
                     if self.titleIDMarr.count > 0{
                         let provinceID = self.titleIDMarr[0] as! NSInteger
                         if provinceModel.id == provinceID{
-                            self.scroolToRow = i
+                            self.scroolToRow = j
                         }
                     }
                     self.provinceMarr.add(provinceModel)
@@ -472,9 +477,11 @@ extension ZHFAddTitleAddressView {
     }
     func case2(selectedID: NSInteger) {
         self.cityMarr.removeAllObjects()
+         var j = -1 //设置这个的主要原因是因为 resultArr 是包含省市区的数组
         for i in 0 ..< resultArr.count{
             let dic : NSDictionary = resultArr[i]
              if (dic["parentid"] as! String == "\(selectedID)") {
+                j = j + 1
                 let dic1: [String : Any] = [
                     //记得把字符串类型转换成Int类型，否则用ObjectMapper转模型是id会出错
                     "id":(dic["id"] as! NSString).intValue,
@@ -484,7 +491,7 @@ extension ZHFAddTitleAddressView {
                 if self.titleIDMarr.count > 1{
                     let cityID = self.titleIDMarr[1] as! NSInteger
                     if cityModel.id == cityID{
-                        self.scroolToRow = i
+                        self.scroolToRow = j
                     }
                 }
                 self.cityMarr.add(cityModel)
@@ -506,9 +513,11 @@ extension ZHFAddTitleAddressView {
     }
     func case3(selectedID: NSInteger) {
         self.countyMarr.removeAllObjects()
+        var j = -1 //设置这个的主要原因是因为 resultArr 是包含省市区的数组
         for i in 0 ..< resultArr.count{
             let dic : NSDictionary = resultArr[i]
             if (dic["parentid"] as! String == "\(selectedID)") {
+                j = j + 1
                 let dic1: [String : Any] = [
                     //记得把字符串类型转换成Int类型，否则用ObjectMapper转模型是id会出错
                     "id":(dic["id"] as! NSString).intValue,
@@ -518,7 +527,7 @@ extension ZHFAddTitleAddressView {
                 if self.titleIDMarr.count > 2{
                     let countyID = self.titleIDMarr[2] as! NSInteger
                     if countyModel.id == countyID{
-                        self.scroolToRow = i
+                        self.scroolToRow = j
                     }
                 }
                 self.countyMarr.add(countyModel)
@@ -539,10 +548,13 @@ extension ZHFAddTitleAddressView {
         }
     }
     func case4(selectedID: NSInteger) {
+        
         self.townMarr.removeAllObjects()
+        var j = -1 // 设置这个的主要原因是因为 resultArr 是包含省市区的数组
         for i in 0 ..< resultArr.count{
             let dic : NSDictionary = resultArr[i]
             if (dic["parentid"] as! String == "\(selectedID)") {
+                j = j + 1
                 let dic1: [String : Any] = [
                     //记得把字符串类型转换成Int类型，否则用ObjectMapper转模型是id会出错
                     "id":(dic["id"] as! NSString).intValue,
@@ -552,7 +564,7 @@ extension ZHFAddTitleAddressView {
                 if self.titleIDMarr.count > 3{
                     let townID = self.titleIDMarr[3] as! NSInteger
                     if townModel.id == townID{
-                        self.scroolToRow = i
+                        self.scroolToRow = j
                     }
                 }
                 self.townMarr.add(townModel)

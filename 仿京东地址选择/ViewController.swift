@@ -23,11 +23,15 @@ class ViewController: UIViewController,ZHFAddTitleAddressViewDelegate {
      lazy var addTitleAddressView : ZHFAddTitleAddressView = ZHFAddTitleAddressView()
     override func viewDidLoad() {
         super.viewDidLoad()
+       
+        //注意：如果是修改地址，在需要修改的地址的titleIDMarr赋值后，设置这一块UI
         setUI()
-        
     }
-    //如果是网络请求修改地址，在需要修改的地址的titleIDMarr赋值后设置这一块UI
+    
     func setUI()  {
+        //假如是修改地址在点击按钮的同时需要直接找到位置请设置titleIDMarr = [省ID，市ID，县ID，乡ID]
+        //addTitleAddressView.titleIDMarr = NSMutableArray()
+        //addTitleAddressView.titleIDMarr = [44,4405,440513,440513100]
         //这是用户的ID
         addTitleAddressView.title = "选择地址"
         addTitleAddressView.userID = 7
