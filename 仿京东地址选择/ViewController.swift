@@ -18,45 +18,21 @@
   简书地址：https://www.jianshu.com/p/0269071219af
  */
 import UIKit
-class ViewController: UIViewController,ZHFAddTitleAddressViewDelegate {
-    @IBOutlet weak var addressBtn: UIButton!
-     lazy var addTitleAddressView : ZHFAddTitleAddressView = ZHFAddTitleAddressView()
+class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
-       
-        //注意：如果是修改地址，在需要修改的地址的titleIDMarr赋值后，设置这一块UI
-        setUI()
+         self.view.backgroundColor = UIColor.white
     }
-    
-    func setUI()  {
-        //假如是修改地址在点击按钮的同时需要直接找到位置请设置titleIDMarr = [省ID，市ID，县ID，乡ID]
-        //addTitleAddressView.titleIDMarr = NSMutableArray()
-        //addTitleAddressView.titleIDMarr = [44,4405,440513,440513100]
-        //这是用户的ID
-        addTitleAddressView.title = "选择地址"
-        addTitleAddressView.userID = 7
-        addTitleAddressView.delegate = self
-        addTitleAddressView.defaultHeight = 350
-        if addTitleAddressView.titleIDMarr.count > 0 {
-            addTitleAddressView.isChangeAddress = true
-        }
-        else{
-            addTitleAddressView.isChangeAddress = false
-        }
-        self.view.addSubview(addTitleAddressView.initAddressView())
+    @IBAction func AddAddressBtnClick(_ sender: UIButton) {
+        let addressVC: AddressVC = AddressVC()
+        addressVC.isEdit = false
+        self.navigationController?.pushViewController(addressVC, animated: true)
         
     }
-    @IBAction func addressBtnClick(_ sender: UIButton) {
-         addTitleAddressView.addAnimate()
-    }
-    func cancelBtnClick(titleAddress: String, titleID: String) {
-        if titleID == "" {
-            addressBtn.setTitle("请选择", for:  UIControlState.normal)
-        }
-        else{
-            addressBtn.setTitle(titleAddress, for: UIControlState.normal)
-            print("打印的对应省市县的id\(titleID)")
-        }
+    @IBAction func EditAddressBtnClick(_ sender: UIButton) {
+        let addressVC: AddressVC = AddressVC()
+        addressVC.isEdit = true
+        self.navigationController?.pushViewController(addressVC, animated: true)
     }
 }
 

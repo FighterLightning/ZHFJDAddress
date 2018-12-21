@@ -12,17 +12,18 @@
 		E32B77F61FDFC1A50095BE8C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E32B77F41FDFC1A50095BE8C /* Main.storyboard */; };
 		E32B77F81FDFC1A50095BE8C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E32B77F71FDFC1A50095BE8C /* Assets.xcassets */; };
 		E32B77FB1FDFC1A50095BE8C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E32B77F91FDFC1A50095BE8C /* LaunchScreen.storyboard */; };
-		E32B78031FDFC1BB0095BE8C /* ProvinceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E32B78021FDFC1BB0095BE8C /* ProvinceModel.swift */; };
-		E335568720D25AC000B1C5E7 /* ZHFAddTitleAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E335568520D25AC000B1C5E7 /* ZHFAddTitleAddressView.swift */; };
-		E335568820D25AC000B1C5E7 /* AddressCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E335568620D25AC000B1C5E7 /* AddressCell.swift */; };
-		E33EFD8720B567BF00E873A8 /* location.txt in Resources */ = {isa = PBXBuildFile; fileRef = E33EFD8620B567BF00E873A8 /* location.txt */; };
 		E367165F21B5249F00815F17 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E367165E21B5249F00815F17 /* Alamofire.framework */; };
 		E367166121B5249F00815F17 /* Chrysan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E367166021B5249F00815F17 /* Chrysan.framework */; };
 		E367166321B5249F00815F17 /* Moya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E367166221B5249F00815F17 /* Moya.framework */; };
 		E367166521B5249F00815F17 /* ObjectMapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E367166421B5249F00815F17 /* ObjectMapper.framework */; };
 		E367166721B5249F00815F17 /* Pods_仿京东地址选择.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E367166621B5249F00815F17 /* Pods_仿京东地址选择.framework */; };
 		E367166921B5249F00815F17 /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E367166821B5249F00815F17 /* Result.framework */; };
-		E397321021B13ADE00FA29DF /* NetworkTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = E397320F21B13ADE00FA29DF /* NetworkTools.swift */; };
+		E369D1FA21CD172C00420469 /* AddressVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E369D1F921CD172C00420469 /* AddressVC.swift */; };
+		E369D20121CD1F3800420469 /* NetworkTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = E369D1FC21CD1F3800420469 /* NetworkTools.swift */; };
+		E369D20221CD1F3800420469 /* ProvinceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E369D1FD21CD1F3800420469 /* ProvinceModel.swift */; };
+		E369D20321CD1F3800420469 /* AddressCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E369D1FE21CD1F3800420469 /* AddressCell.swift */; };
+		E369D20421CD1F3800420469 /* ZHFAddTitleAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E369D1FF21CD1F3800420469 /* ZHFAddTitleAddressView.swift */; };
+		E369D20521CD1F3800420469 /* location.txt in Resources */ = {isa = PBXBuildFile; fileRef = E369D20021CD1F3800420469 /* location.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,17 +36,18 @@
 		E32B77F71FDFC1A50095BE8C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E32B77FA1FDFC1A50095BE8C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E32B77FC1FDFC1A50095BE8C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E32B78021FDFC1BB0095BE8C /* ProvinceModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProvinceModel.swift; sourceTree = "<group>"; };
-		E335568520D25AC000B1C5E7 /* ZHFAddTitleAddressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZHFAddTitleAddressView.swift; sourceTree = "<group>"; };
-		E335568620D25AC000B1C5E7 /* AddressCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressCell.swift; sourceTree = "<group>"; };
-		E33EFD8620B567BF00E873A8 /* location.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = location.txt; sourceTree = "<group>"; };
 		E367165E21B5249F00815F17 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E367166021B5249F00815F17 /* Chrysan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Chrysan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E367166221B5249F00815F17 /* Moya.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Moya.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E367166421B5249F00815F17 /* ObjectMapper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ObjectMapper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E367166621B5249F00815F17 /* Pods_仿京东地址选择.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = "Pods_仿京东地址选择.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E367166821B5249F00815F17 /* Result.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Result.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		E397320F21B13ADE00FA29DF /* NetworkTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkTools.swift; sourceTree = "<group>"; };
+		E369D1F921CD172C00420469 /* AddressVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressVC.swift; sourceTree = "<group>"; };
+		E369D1FC21CD1F3800420469 /* NetworkTools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkTools.swift; sourceTree = "<group>"; };
+		E369D1FD21CD1F3800420469 /* ProvinceModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProvinceModel.swift; sourceTree = "<group>"; };
+		E369D1FE21CD1F3800420469 /* AddressCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddressCell.swift; sourceTree = "<group>"; };
+		E369D1FF21CD1F3800420469 /* ZHFAddTitleAddressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZHFAddTitleAddressView.swift; sourceTree = "<group>"; };
+		E369D20021CD1F3800420469 /* location.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = location.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,19 +110,28 @@
 		E32B77EF1FDFC1A50095BE8C /* 仿京东地址选择 */ = {
 			isa = PBXGroup;
 			children = (
-				E33EFD8620B567BF00E873A8 /* location.txt */,
-				E32B78021FDFC1BB0095BE8C /* ProvinceModel.swift */,
-				E397320F21B13ADE00FA29DF /* NetworkTools.swift */,
-				E335568620D25AC000B1C5E7 /* AddressCell.swift */,
-				E335568520D25AC000B1C5E7 /* ZHFAddTitleAddressView.swift */,
+				E369D1FB21CD1F3800420469 /* ZHFAddress */,
 				E32B77F01FDFC1A50095BE8C /* AppDelegate.swift */,
 				E32B77F21FDFC1A50095BE8C /* ViewController.swift */,
+				E369D1F921CD172C00420469 /* AddressVC.swift */,
 				E32B77F41FDFC1A50095BE8C /* Main.storyboard */,
 				E32B77F71FDFC1A50095BE8C /* Assets.xcassets */,
 				E32B77F91FDFC1A50095BE8C /* LaunchScreen.storyboard */,
 				E32B77FC1FDFC1A50095BE8C /* Info.plist */,
 			);
 			path = "仿京东地址选择";
+			sourceTree = "<group>";
+		};
+		E369D1FB21CD1F3800420469 /* ZHFAddress */ = {
+			isa = PBXGroup;
+			children = (
+				E369D1FC21CD1F3800420469 /* NetworkTools.swift */,
+				E369D1FD21CD1F3800420469 /* ProvinceModel.swift */,
+				E369D1FE21CD1F3800420469 /* AddressCell.swift */,
+				E369D1FF21CD1F3800420469 /* ZHFAddTitleAddressView.swift */,
+				E369D20021CD1F3800420469 /* location.txt */,
+			);
+			path = ZHFAddress;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -184,10 +195,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E369D20521CD1F3800420469 /* location.txt in Resources */,
 				E32B77FB1FDFC1A50095BE8C /* LaunchScreen.storyboard in Resources */,
 				E32B77F81FDFC1A50095BE8C /* Assets.xcassets in Resources */,
 				E32B77F61FDFC1A50095BE8C /* Main.storyboard in Resources */,
-				E33EFD8720B567BF00E873A8 /* location.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -245,12 +256,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E32B78031FDFC1BB0095BE8C /* ProvinceModel.swift in Sources */,
-				E335568720D25AC000B1C5E7 /* ZHFAddTitleAddressView.swift in Sources */,
-				E397321021B13ADE00FA29DF /* NetworkTools.swift in Sources */,
+				E369D20121CD1F3800420469 /* NetworkTools.swift in Sources */,
+				E369D20221CD1F3800420469 /* ProvinceModel.swift in Sources */,
+				E369D1FA21CD172C00420469 /* AddressVC.swift in Sources */,
+				E369D20321CD1F3800420469 /* AddressCell.swift in Sources */,
 				E32B77F31FDFC1A50095BE8C /* ViewController.swift in Sources */,
-				E335568820D25AC000B1C5E7 /* AddressCell.swift in Sources */,
 				E32B77F11FDFC1A50095BE8C /* AppDelegate.swift in Sources */,
+				E369D20421CD1F3800420469 /* ZHFAddTitleAddressView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
