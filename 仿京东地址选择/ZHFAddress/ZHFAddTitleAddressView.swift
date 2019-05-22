@@ -432,10 +432,13 @@ extension ZHFAddTitleAddressView {
         if self.tableViewMarr.count >= addressID{
             let tableView1: UITableView  = self.tableViewMarr[addressID - 1] as! UITableView
             tableView1.reloadData()
+            tableView1.layoutIfNeeded()
             if self.isChangeAddress == true{
                 //保证列表刷新之后才进行滚动处理
                 DispatchQueue.main.async {
+                 if tableView1.numberOfRows(inSection: 0) > self.scroolToRow{
                     tableView1.scrollToRow(at: NSIndexPath.init(row: self.scroolToRow, section: 0) as IndexPath, at: UITableViewScrollPosition.bottom, animated: false)
+                   }
                 }
             }
         }
@@ -643,11 +646,14 @@ extension ZHFAddTitleAddressView {
 //                        if self.tableViewMarr.count >= addressID{
 //                            let tableView1: UITableView  = self.tableViewMarr[addressID - 1] as! UITableView
 //                            tableView1.reloadData()
+//                            tableView1.layoutIfNeeded()
 //                            if self.isChangeAddress == true{
 //                                //保证列表刷新之后才进行滚动处理
 //                                DispatchQueue.main.async {
+//                                    if tableView1.numberOfRows(inSection: 0) > self.scroolToRow{
 //                                    tableView1.scrollToRow(at: NSIndexPath.init(row: self.scroolToRow, section: 0) as IndexPath, at: UITableViewScrollPosition.bottom, animated: false)
-//                                }
+//                                  }
+//                               }
 //                            }
 //                        }
 //                    }
