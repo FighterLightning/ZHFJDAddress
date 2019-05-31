@@ -12,6 +12,10 @@ class AddressVC: UIViewController,ZHFAddTitleAddressViewDelegate {
      lazy var addTitleAddressView : ZHFAddTitleAddressView = ZHFAddTitleAddressView()
     var isEdit: Bool = false //判断是否是编辑地址
     var addressBtn: UIButton!
+    override func viewWillDisappear(_ animated: Bool) {
+        // 因为是通过 UIApplication.shared.keyWindow?.addSubview添加的，记得移除一下
+        addTitleAddressView.removeFromSuperview()
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white
