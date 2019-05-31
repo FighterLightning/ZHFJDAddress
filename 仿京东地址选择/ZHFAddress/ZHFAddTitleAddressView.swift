@@ -87,11 +87,11 @@ class ZHFAddTitleAddressView: UIView {
         titleLabel.textColor = UIColor.gray
         titleLabel.font = UIFont.systemFont(ofSize: 17)
         addAddressView.addSubview(titleLabel)
-        let cancelBtn:UIButton = UIButton.init(type: UIButtonType.custom)
+        let cancelBtn:UIButton = UIButton.init(type: .custom)
         cancelBtn.frame = CGRect.init(x:addAddressView.frame.maxX - 40, y: 10, width: 30, height: 30)
         cancelBtn.tag = 1
-        cancelBtn.setImage(UIImage.init(named: "cancel"), for: UIControlState.normal)
-        cancelBtn.addTarget(self, action: #selector(cancelBtnClicked), for: UIControlEvents.touchUpInside)
+        cancelBtn.setImage(UIImage.init(named: "cancel"), for: .normal)
+        cancelBtn.addTarget(self, action: #selector(cancelBtnClicked), for: .touchUpInside)
         addAddressView.addSubview(cancelBtn)
         self.addTableViewAndTitle(tableViewTag: 0)
         //1.添加标题滚动视图
@@ -176,16 +176,16 @@ extension ZHFAddTitleAddressView :UIScrollViewDelegate{
         for i in 0 ..< self.titleMarr.count {
             let title : String = (titleMarr[i] as? String)!
             let titlelenth : CGFloat = CGFloat(title.count * 15)
-            let titleBtn :UIButton = UIButton.init(type:UIButtonType.custom)
-            titleBtn.setTitle(title, for: UIControlState.normal)
+            let titleBtn :UIButton = UIButton.init(type:.custom)
+            titleBtn.setTitle(title, for: .normal)
             titleBtn.tag = i
-            titleBtn.setTitleColor(UIColor.black, for: UIControlState.normal)
-            titleBtn.setTitleColor(UIColor.red, for: UIControlState.selected)
+            titleBtn.setTitleColor(UIColor.black, for: .normal)
+            titleBtn.setTitleColor(UIColor.red, for: .selected)
             titleBtn.isSelected = false
             titleBtn.titleLabel?.font = UIFont.systemFont(ofSize: 13)
             titleBtn.frame = CGRect.init(x: x, y: 0, width: titlelenth, height: btnH)
             x  = (titlelenth + 10) + x
-            titleBtn.addTarget(self, action: #selector(titleBtnClick), for: UIControlEvents.touchUpInside)
+            titleBtn.addTarget(self, action: #selector(titleBtnClick), for: .touchUpInside)
             self.titleBtns.add(titleBtn)
             if i == selectId {
                 titleBtnClick(titleBtn: titleBtn)
@@ -262,7 +262,7 @@ extension ZHFAddTitleAddressView:UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell :AddressCell = tableView.dequeueReusableCell(withIdentifier: AddressAdministerCellIdentifier, for: indexPath) as! AddressCell
         if cell.isEqual(nil){
-            cell = AddressCell(style:.default, reuseIdentifier: AddressAdministerCellIdentifier)
+            cell = AddressCell.init(style: .default, reuseIdentifier: AddressAdministerCellIdentifier)
         }
         if tableView.tag == 0 {
             let provinceModel: ProvinceModel = self.provinceMarr[indexPath.row] as! ProvinceModel
@@ -297,7 +297,7 @@ extension ZHFAddTitleAddressView:UITableViewDelegate,UITableViewDataSource{
                 cell.isChangeRed = false
             }
         }
-        cell.selectionStyle = UITableViewCellSelectionStyle.none
+        cell.selectionStyle = .none
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -372,8 +372,8 @@ extension ZHFAddTitleAddressView:UITableViewDelegate,UITableViewDataSource{
     }
     //添加tableView和title
     func addTableViewAndTitle(tableViewTag: NSInteger){
-        let tableView2:UITableView = UITableView.init(frame: CGRect.init(x: 0, y: 0, width: ScreenWidth, height: 200), style: UITableViewStyle.plain)
-        tableView2.separatorStyle = UITableViewCellSeparatorStyle.none
+        let tableView2:UITableView = UITableView.init(frame: CGRect.init(x: 0, y: 0, width: ScreenWidth, height: 200), style: .plain)
+        tableView2.separatorStyle = .none
         tableView2.tag = tableViewTag
         tableView2.register(AddressCell.self, forCellReuseIdentifier: AddressAdministerCellIdentifier)
         self.tableViewMarr.add(tableView2)
@@ -437,7 +437,7 @@ extension ZHFAddTitleAddressView {
                 //保证列表刷新之后才进行滚动处理
                 DispatchQueue.main.async {
                  if tableView1.numberOfRows(inSection: 0) >= self.scroolToRow{
-                    tableView1.scrollToRow(at: NSIndexPath.init(row: self.scroolToRow, section: 0) as IndexPath, at: UITableViewScrollPosition.bottom, animated: false)
+                    tableView1.scrollToRow(at: NSIndexPath.init(row: self.scroolToRow, section: 0) as IndexPath, at: .bottom, animated: false)
                    }
                 }
             }

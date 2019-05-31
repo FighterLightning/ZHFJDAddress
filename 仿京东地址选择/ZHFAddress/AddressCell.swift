@@ -14,7 +14,7 @@ class AddressCell: UITableViewCell {
     var titleString: String = ""{
         didSet{
             titleLabel.text = titleString
-            let sizeNew : CGSize =  titleString.size(withAttributes: [kCTFontAttributeName as NSAttributedStringKey: titleLabel.font])
+            let sizeNew : CGSize =  titleString.size(withAttributes: [kCTFontAttributeName as NSAttributedString.Key: titleLabel.font])
             // 重新设置frame
             titleLabel.frame = CGRect.init(x: 20, y: 0, width: sizeNew.width, height: self.frame.size.height)
             selectImage.frame = CGRect.init(x: titleLabel.frame.maxX + 5, y: (self.frame.size.height - 20)/2, width: 15, height: 15)
@@ -32,7 +32,7 @@ class AddressCell: UITableViewCell {
             }
         }
     }
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         //  创建UI方法
         creatUI()
