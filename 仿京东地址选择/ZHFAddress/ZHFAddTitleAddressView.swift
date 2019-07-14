@@ -31,13 +31,12 @@ import Chrysan
 import Moya
 let ScreenHeight = UIScreen.main.bounds.size.height
 let ScreenWidth = UIScreen.main.bounds.size.width
-protocol ZHFAddTitleAddressViewDelegate {
+@objc protocol ZHFAddTitleAddressViewDelegate {
     func cancelBtnClick( titleAddress: String,titleID: String)
 }
 class ZHFAddTitleAddressView: UIView {
   let AddressAdministerCellIdentifier  = "AddressAdministerCellIdentifier"
-  var delegate: ZHFAddTitleAddressViewDelegate?
-  var userID :NSInteger = 0
+  weak var delegate: ZHFAddTitleAddressViewDelegate?
   var defaultHeight: CGFloat = 200
   var title: String = "所在地区"
   var isclick: Bool = false  //判断是滚动还是点击
