@@ -17,11 +17,11 @@ https://github.com/FighterLightning/ZHFJDAddressOC.git
  1. 下载该demo。把ProvinceModel.swift（必须），ZHFAddTitleAddressView.swift(必须) AddressCell.swift(必须) NetworkTools.swift(网络请求类，本地数据不需要，对Moya做简单的处理可自写)拖进项目
 
  2. 在 Podfile 中添加:
- * `pod 'Moya'`//网络请求
+ * `pod 'Moya'`//网络请求（如果只是本地数据，不需要添加）
  
- * `pod 'ObjectMapper'`//字典转模型
+ * `pod 'ObjectMapper'`//字典转模型（如果你项目中和这个不一致，可以以你项目为准）
 
- * `pod 'Chrysan', :git => 'https://github.com/Harley-xk/Chrysan.git'`//第三方加载框（根据需求进行添加）
+ * `pod 'Chrysan', :git => 'https://github.com/Harley-xk/Chrysan.git'`//第三方加载框（如果不需要，完全不用添加）
  	
 3. 你主要需要关注的是ZHFAddTitleAddressView.m 这个方法
 
