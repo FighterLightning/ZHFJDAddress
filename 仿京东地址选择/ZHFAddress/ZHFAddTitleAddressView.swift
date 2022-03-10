@@ -263,22 +263,22 @@ extension ZHFAddTitleAddressView:UITableViewDelegate,UITableViewDataSource{
         if cell.isEqual(nil){
             cell = AddressCell.init(style: .default, reuseIdentifier: AddressAdministerCellIdentifier)
         }
-        if tableView.tag == 0 {
+        if tableView.tag == 0 && self.provinceMarr.count > indexPath.row {
             let provinceModel: ProvinceModel = self.provinceMarr[indexPath.row] as! ProvinceModel
             cell.titleString = provinceModel.province_name!
             self.PCCTID = provinceModel.id
         }
-        else if tableView.tag == 1 {
+        else if tableView.tag == 1 && self.cityMarr.count > indexPath.row {
            let cityModel: CityModel = self.cityMarr[indexPath.row] as! CityModel
             cell.titleString = cityModel.city_name!
             self.PCCTID = cityModel.id
         }
-        else if tableView.tag == 2{
+        else if tableView.tag == 2 && self.countyMarr.count > indexPath.row {
             let countyModel: CountyModel = self.countyMarr[indexPath.row] as! CountyModel
             cell.titleString = countyModel.county_name!
             self.PCCTID = countyModel.id
         }
-        else if tableView.tag == 3{
+        else if tableView.tag == 3 && self.townMarr.count > indexPath.row {
             let townModel: TownModel = self.townMarr[indexPath.row] as! TownModel
             cell.titleString = townModel.town_name!
             self.PCCTID = townModel.id
